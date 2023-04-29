@@ -20,7 +20,10 @@ Trigger::Trigger(IGenerator& inGenerator) :
     _beatsPerPattern    { 0 },
     _ticksTillUnlock    { 0 },
     _repeats            { INT32_MAX },
-    _retrigger          { 0 } 
+    _retrigger          { 0 },
+    _repeats_to_retrigger { 0 },
+    _retrigger_distance { 0 },
+    _onset              { 0 }
     {}
 
 void Trigger::prepareCWordPattern(int onsets, int shift) {
@@ -115,11 +118,17 @@ void Trigger::next(bool engaged) {
     if (_ticksTillUnlock > 0) _ticksTillUnlock--;
     if (_iterator == _triggerPoints[_nextPointIndex]) {
         if (engaged && _nextPointIndex < _repeats) {
-            long onset = 0;
-            if (_retrigger && _nextPointIndex % _retrigger == 0) {
-                onset = static_cast<float>(_triggerPoints[_nextPointIndex]) / kTicksPerBeat;
+            if (_retrigger) {
+                _repeats_to_retrigger ++;
+                _retrigger_distance += _triggerPoints[_nextPointIndex]; 
+                if (_repeats_to_retrigger % _retrigger == 0) {
+                    _onset += static_cast<float>(_retrigger_distance) / kTicksPerBeat;
+                    if (_onset >= 2048.f) _onset = 0;
+                    _retrigger_distance = 0;
+                    _repeats_to_retrigger = 0;
+                }
             }
-            _generator.activate_slice(onset, 0);
+            _generator.activate_slice(_onset, 0);
             _ticksTillUnlock = 1;
         }
         _nextPointIndex = (_nextPointIndex + 1) % _pointsCount;
@@ -128,6 +137,9 @@ void Trigger::next(bool engaged) {
 }
 
 void Trigger::reset() {
+    _onset = 0;
+    _repeats_to_retrigger = 0;
+    _retrigger_distance = 0;
     _iterator = 0;
     _nextPointIndex = 0;
     _ticksTillUnlock = 0;

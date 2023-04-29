@@ -147,7 +147,7 @@ void Engine::setRepeats(float normVal) {
 
 void Engine::setRetrigger(float normVal) {
     _raw.retrigger = normVal;
-    _trigger.setRetrigger(round(normVal * 8));
+    _trigger.setRetrigger(round(normVal * 16));
 }
 
 void Engine::setJitterAmount(float value) {

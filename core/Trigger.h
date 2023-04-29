@@ -70,6 +70,9 @@ private:
     
     uint32_t _repeats;
     uint32_t _retrigger;
+    uint32_t _repeats_to_retrigger;
+    uint32_t _retrigger_distance;
+    float _onset;
 };
 
 #endif
