@@ -237,11 +237,13 @@ void Engine::process(float in0, float in1, float* out0, float* out1, bool contin
 }
 
 void Engine::reset(bool hard) {
-    if (hard) {
-        _source.reset();
-        _generator.set_cycle_start();
-    }
-        
+    if (hard) clear_buffer();
     _generator.reset();
     _trigger.reset();
+}
+
+void Engine::clear_buffer() {
+    _source.reset();
+    _generator.reset();
+    _generator.set_cycle_start();
 }

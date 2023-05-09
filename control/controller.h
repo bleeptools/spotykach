@@ -52,6 +52,8 @@ private:
     bool _holding_fwd_b = false;
     bool _holding_rev_a = false;
     bool _holding_rev_b = false;
+    bool _rec_a = false;
+    bool _rec_b = false;
     bool _is_playing_toggled = false;
 };
 }

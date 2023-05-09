@@ -142,7 +142,7 @@ void Core::setCascade(bool value) {
     Engine& e = engineAt(1);
     e.setAntifreeze(value);
     
-    if (needsReset) e.reset();
+    if (needsReset) e.reset(true);
 }
 
 void Core::setSplit(bool value) {

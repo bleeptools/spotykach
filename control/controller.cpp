@@ -57,9 +57,23 @@ void Controller::init_sensor(Core& core) {
 
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
 
-    _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); }, Target::PatternMinusA);
+    _sensor.set_on_touch([&e_a, this]{ 
+        if (this->_rec_a) {
+            e_a.clear_buffer();
+        }
+        else {
+            this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); 
+        }
+    }, Target::PatternMinusA);
     _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.next_pattern(), e_a.grid()); }, Target::PatternPlusA);
-    _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); }, Target::PatternMinusB);
+    _sensor.set_on_touch([&e_b, this]{ 
+        if (this->_rec_b) {
+            e_b.clear_buffer();
+        }
+        else {
+            this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); 
+        }
+    }, Target::PatternMinusB);
     _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.next_pattern(), e_b.grid()); }, Target::PatternPlusB);
 }
 
@@ -162,16 +176,16 @@ void Controller::read_sensor(Core& core, Leds& leds) {
     auto& e_a = core.engineAt(0);
     auto& e_b = core.engineAt(1);
 
-    auto rec_a = _sensor.is_on(Target::RecordA);
-    auto rec_b = _sensor.is_on(Target::RecordB);
+    _rec_a = _sensor.is_on(Target::RecordA);
+    _rec_b = _sensor.is_on(Target::RecordB);
 
-    e_a.setFrozen(!rec_a);
-    e_b.setFrozen(!rec_b);
+    e_a.setFrozen(!_rec_a);
+    e_b.setFrozen(!_rec_b);
 
     _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
     _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);
-    _holding_rev_a = !rec_a && _sensor.is_on(Target::OneShotRevA);
-    _holding_rev_b = !rec_b && _sensor.is_on(Target::OneShotRevB);
+    _holding_rev_a = !_rec_a && _sensor.is_on(Target::OneShotRevA);
+    _holding_rev_b = !_rec_b && _sensor.is_on(Target::OneShotRevB);
     
 
     auto is_playing_toggled = _sensor.is_on(Target::PlayStop);
@@ -185,13 +199,13 @@ void Controller::read_sensor(Core& core, Leds& leds) {
     e_b.set_is_playing(is_playing_toggled, reset);
 
     PlaybackControls pc;
-    pc.ctns_a = !(rec_a && is_playing_toggled) && (_holding_fwd_a || _holding_rev_a);
-    pc.ctns_b = !(rec_b && is_playing_toggled) && (_holding_fwd_b || _holding_rev_b);
+    pc.ctns_a = !(_rec_a && is_playing_toggled) && (_holding_fwd_a || _holding_rev_a);
+    pc.ctns_b = !(_rec_b && is_playing_toggled) && (_holding_fwd_b || _holding_rev_b);
     pc.rev_a = _holding_rev_a;
     pc.rev_b = _holding_rev_b;
     core.set_playback_controls(pc);
 
     leds.set_led_a_on(holding_a && !is_playing_toggled);
     leds.set_led_b_on(holding_b && !is_playing_toggled);
-    leds.set_rec_on(rec_a || rec_b);
+    leds.set_rec_on(_rec_a || _rec_b);
 }

@@ -93,7 +93,8 @@ public:
 
     void process(float in0, float in1, float* out0, float* out1, bool continual, bool reverse);
 
-    void reset(bool hard = true);
+    void reset(bool hard);
+    void clear_buffer();
     
     int index = -1;
 
