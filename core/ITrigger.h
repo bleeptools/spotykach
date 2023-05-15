@@ -18,7 +18,7 @@ public:
     virtual uint32_t points_count() = 0;
     virtual uint32_t beats_per_pattern() = 0;
 
-    std::array<uint32_t, kGrid_Count> pattern_indexes();
+    virtual std::array<uint32_t, kGrid_Count> pattern_indexes() = 0;
     virtual void init_pattern_indexes(std::array<uint32_t, kGrid_Count> indexes) = 0;
     virtual uint32_t next_pattern() = 0;
     virtual uint32_t prev_pattern() = 0;

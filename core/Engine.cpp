@@ -34,14 +34,14 @@ Engine::Engine(ITrigger& t, ISource& s, IEnvelope& e, IGenerator& g, ILFO& l):
         this->_invalidate_crossfade = true; 
     });
 
-    setSliceLength(0.5);
-    setReverse(false);
-    setJitterAmount(0);
-    setJitterRate(0.75);
-    setFrozen(true);
+    set_slice_length(0.5);
+    set_reverse(false);
+    set_jitter_amount(0);
+    set_jitter_rate(0.75);
+    set_frozen(true);
 }
 
-void Engine::setSlicePosition(float normVal) {
+void Engine::set_slice_position(float normVal) {
     if (fcomp(_raw.slicePosition, normVal)) return;
     _raw.slicePosition = normVal;
     float start = std::min(normVal, 127.f/128.f);
@@ -51,7 +51,7 @@ void Engine::setSlicePosition(float normVal) {
     }
 }
 
-void Engine::setSliceLength(float normVal) {
+void Engine::set_slice_length(float normVal) {
     if (fcomp(_raw.sliceLength, normVal)) return;
     _raw.sliceLength = normVal;
     float slice = fmax(normVal, 1./128.);
@@ -62,21 +62,21 @@ void Engine::setSliceLength(float normVal) {
     }
 }
 
-void Engine::setJitterAmount(float value) {
+void Engine::set_jitter_amount(float value) {
     _generator.set_jitter_amount(value);
 }
 
-void Engine::setJitterRate(float value) {
+void Engine::set_jitter_rate(float value) {
     _jitterLFO.setPeriod(1. - value);
 }
 
-void Engine::setReverse(bool value) {
+void Engine::set_reverse(bool value) {
     if (value == _raw.reverse) return;
     _raw.reverse = value;
     _generator.set_reverse(value);
 }
 
-void Engine::setFrozen(bool frozen) {
+void Engine::set_frozen(bool frozen) {
     auto isTurningOff = _raw.frozen && !frozen;
     _raw.frozen = frozen;
     _source.set_frozen(frozen);
@@ -86,7 +86,7 @@ void Engine::setFrozen(bool frozen) {
     }
 }
 
-void Engine::setAntifreeze(bool value) {
+void Engine::set_antifreeze(bool value) {
     _source.set_antifreeze(value);
 }
 

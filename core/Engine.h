@@ -1,12 +1,4 @@
-//
-//  Engine.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 30.03.22.
-//
-
-#ifndef Engine_h
-#define Engine_h
+#pragma once
 
 #include "ITrigger.h"
 #include "ISource.h"
@@ -48,22 +40,22 @@ public:
 
     void set_is_playing(bool value, bool clean);
     
-    void setSlicePosition(float start);
-    void setSliceLength(float slice);
+    void set_slice_position(float start);
+    void set_slice_length(float slice);
     
     void set_pitch_shift(float value);
     
-    void setJitterAmount(float value);
-    void setJitterRate(float value);
+    void set_jitter_amount(float value);
+    void set_jitter_rate(float value);
     
-    void setReverse(bool reverse);
+    void set_reverse(bool reverse);
     
     void step(bool engaged);
 
     void preprocess(PlaybackParameters p);
     
-    void setFrozen(bool frozen);
-    void setAntifreeze(bool value);
+    void set_frozen(bool frozen);
+    void set_antifreeze(bool value);
 
     void set_on_slice(SliceCallback f);
 
@@ -93,5 +85,3 @@ private:
 };
 }
 }
-
-#endif /* Engine_h */

@@ -63,7 +63,7 @@ long Core::enginesCount() const {
 
 void Core::setJitterRate(float normVal) {
     for (int i = 0; i < enginesCount(); i++) {
-        engineAt(i).setJitterRate(normVal);
+        engineAt(i).set_jitter_rate(normVal);
     }
 }
 
@@ -91,48 +91,48 @@ void Core::set_pattern_balance(float value) {
     if (fcomp(value, pattern_balance_)) return;
     pattern_balance_ = value;
 
-    auto& e1 = engineAt(0);
-    auto& e2 = engineAt(1);
+    auto& t1 = engineAt(0).trig();
+    auto& t2 = engineAt(1).trig();
     //center
     if (fcomp(value, 0.5)) {
-        e1.setShift(0);
-        e1.setRepeats(1.0);
-        e2.setShift(0);
-        e2.setRepeats(1.0);
+        t1.set_repeats(1.0);
+        t1.set_shift(0);
+        t2.set_repeats(1.0);
+        t2.set_shift(0);
         return;
     }
     //0...0.24
     if (value < 0.25) {
-        e1.setShift(0);
-        e1.setRepeats(1 - 2 * value);
-        e2.setShift(1 - 2 * value);
-        e2.setRepeats(2 * value);
+        t1.set_repeats(1 - 2 * value);
+        t1.set_shift(0);
+        t2.set_repeats(2 * value);
+        t2.set_shift(1 - 2 * value);
         return;
     }
     //0.25...center
     if (value < 0.5) {
-        e1.setShift(0);
-        e1.setRepeats(2 * value);
-        e2.setShift(1 - 2 * value);
-        e2.setRepeats(2 * value);
+        t1.set_repeats(2 * value);
+        t1.set_shift(0);
+        t2.set_repeats(2 * value);
+        t2.set_shift(1 - 2 * value);
         return;
     }
 
     //0.76...1.0
     if (value > 0.75) {
-        e1.setShift(2 * value - 1);
-        e1.setRepeats(2 * (1 - value));
-        e2.setShift(0);
-        e2.setRepeats(2 * value - 1);
+        t1.set_repeats(2 * (1 - value));
+        t1.set_shift(2 * value - 1);
+        t2.set_repeats(2 * value - 1);
+        t2.set_shift(0);
         return;
     }
 
     //0.5...0.75
     if (value > 0.5) {
-        e1.setShift(2 * value - 1);
-        e1.setRepeats(2 * (1 - value));
-        e2.setShift(0);
-        e2.setRepeats(2 * (1 - value));
+        t1.set_repeats(2 * (1 - value));
+        t1.set_shift(2 * value - 1);
+        t2.set_repeats(2 * (1 - value));
+        t2.set_shift(0);
     }
 }
 
@@ -140,7 +140,7 @@ void Core::setCascade(bool value) {
     auto needsReset = !_cascade && value;
     _cascade = value;
     Engine& e = engineAt(1);
-    e.setAntifreeze(value);
+    e.set_antifreeze(value);
     
     if (needsReset) e.reset(true);
 }
@@ -155,10 +155,10 @@ void Core::initialize() const {
 
 void Core::step() {
     auto& e1 = engineAt(0);
-    e1.step();
+    e1.step(true);
     
     auto& e2 = engineAt(1);
-    bool engaged = !(_mutex && e1.isLocking());
+    bool engaged = !(_mutex && e1.trig().is_locking());
     e2.step(engaged);
 }
 

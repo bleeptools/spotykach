@@ -26,7 +26,7 @@ public:
 
     uint32_t beats_per_pattern() override { return _beats_per_pattern; };
 
-    std::array<uint32_t, kGrid_Count> pattern_indexes() { return _pattern_indexes; }
+    std::array<uint32_t, kGrid_Count> pattern_indexes() override { return _pattern_indexes; }
     void init_pattern_indexes(std::array<uint32_t, kGrid_Count> indexes) override;
     uint32_t next_pattern() override;
     uint32_t prev_pattern() override;
@@ -36,10 +36,12 @@ public:
 
     void on_pattern_changed(std::function<void(uint32_t)> on_changed) override;
 
+    Grid grid() override { return _grid; }
     void set_grid(float grid) override;
     void set_shift(float shift) override;
     void set_repeats(float repeats) override;
     void set_retrigger(float retrigger) override;
+    uint32_t points_count() override { return _points_count; }
 
     void next(bool engaged) override;
 

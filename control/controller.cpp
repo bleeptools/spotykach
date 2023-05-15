@@ -103,17 +103,17 @@ void Controller::set_knob_parameters(Core &s) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case KT::SlicePositionA:    a.setSlicePosition(v);      break;
-            case KT::SliceLengthA:      a.setSliceLength(v);        break;
+            case KT::SlicePositionA:    a.set_slice_position(v);      break;
+            case KT::SliceLengthA:      a.set_slice_length(v);        break;
             case KT::RetriggerA:        a.trig().set_retrigger(v);  break;
-            case KT::JitterAmountA:     a.setJitterAmount(v);       break;
+            case KT::JitterAmountA:     a.set_jitter_amount(v);       break;
             case KT::JitterRate:        s.setJitterRate(v);         break;
             case KT::VolumeCrossfade:   s.setVolumeBalance(v);      break;
             case KT::PatternCrossfade:  s.set_pattern_balance(v);   break;
-            case KT::SlicePositionB:    b.setSlicePosition(v);      break;
-            case KT::SliceLengthB:      b.setSliceLength(v);        break;
+            case KT::SlicePositionB:    b.set_slice_position(v);      break;
+            case KT::SliceLengthB:      b.set_slice_length(v);        break;
             case KT::RetriggerB:        b.trig().set_retrigger(v);  break;
-            case KT::JitterAmountB:     b.setJitterAmount(v);       break;
+            case KT::JitterAmountB:     b.set_jitter_amount(v);       break;
             case KT::Pitch:             
             { 
                 a.set_pitch_shift(v); 
@@ -135,7 +135,7 @@ void Controller::set_channel_toggles(Engine& e, ChannelToggles& ct, int ei) {
         using Target = ChannelToggles::Target;
         switch (target) {
             case Target::Grid:      e.trig().set_grid(isOn ? 1 : 0); break;
-            case Target::Reverse:   e.setReverse((isOn && !holding_fwd) || holding_rev); break;
+            case Target::Reverse:   e.set_reverse((isOn && !holding_fwd) || holding_rev); break;
             default: {}
         }
     }
@@ -165,8 +165,8 @@ void Controller::read_sensor(Core& core, Leds& leds) {
     _rec_a = _sensor.is_on(Target::RecordA);
     _rec_b = _sensor.is_on(Target::RecordB);
 
-    e_a.setFrozen(!_rec_a);
-    e_b.setFrozen(!_rec_b);
+    e_a.set_frozen(!_rec_a);
+    e_b.set_frozen(!_rec_b);
 
     _holding_fwd_a = _sensor.is_on(Target::OneShotFwdA);
     _holding_fwd_b = _sensor.is_on(Target::OneShotFwdB);

@@ -15,7 +15,7 @@
 class Envelope: public IEnvelope {
     
 public:
-    Envelope() = default;
+    Envelope();
     ~Envelope() = default;
     
     long attackLength() override { return _attackLength; };
