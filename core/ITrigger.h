@@ -5,32 +5,43 @@
 //  Created by Vladyslav Lytvynenko on 16.03.22.
 //
 
-#ifndef ITrigger_h
-#define ITrigger_h
+#pragma once
 
-#include "IEnvelope.h"
-#include <algorithm>
+#include <functional>
+#include "Parameters.h"
+
+namespace vlly {
+namespace spotykach {
 
 class ITrigger {
 public:
-    virtual void set_index(int index) = 0;
+    virtual uint32_t points_count() = 0;
+    virtual uint32_t beats_per_pattern() = 0;
 
-    virtual uint32_t pointsCount() = 0;
-    virtual uint32_t beatsPerPattern() = 0;
-    virtual void prepareMeterPattern(int step, int shift) = 0;
-    virtual void prepareCWordPattern(int onsets, int shift) = 0;
-    virtual void one_shot(bool reverse) = 0;
+    std::array<uint32_t, kGrid_Count> pattern_indexes();
+    virtual void init_pattern_indexes(std::array<uint32_t, kGrid_Count> indexes) = 0;
+    virtual uint32_t next_pattern() = 0;
+    virtual uint32_t prev_pattern() = 0;
+
+    virtual void prepare_meter_pattern(uint32_t step, uint32_t shift) = 0;
+    virtual void prepare_cword_pattern(uint32_t onsets, uint32_t shift) = 0;
+
+    virtual void on_pattern_changed(std::function<void(uint32_t)> on_changed) = 0;
+
+    virtual Grid grid() = 0;
+    virtual void set_grid(float grid) = 0;
+    virtual void set_shift(float shift) = 0;
+    virtual void set_repeats(float repeats) = 0;
+    virtual void set_retrigger(float retrigger) = 0;
+
     virtual void next(bool engaged) = 0;
+
+    virtual bool is_locking() = 0;
+
     virtual void reset() = 0;
-    
-    virtual void setRetrigger(int) = 0;
-    
-    virtual uint32_t repeats() = 0;
-    virtual void setRepeats(int) = 0;
-    
-    virtual bool locking() = 0;
-    
+
     virtual ~ITrigger() {};
 };
 
-#endif /* ITrigger_h */
+}
+}

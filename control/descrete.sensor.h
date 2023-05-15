@@ -110,31 +110,6 @@ public:
 
     void process() {
         auto state = _mpr.Touched();
-    
-    //     _buffer[_iterator] = state;
-    //     _iterator++;
-    //     if (_iterator < _buffer_length) return;
-    //     _iterator = 0;
-    //     auto _buffer2_3rds = 2 * _buffer_length / 3;
-    //     for (int i = 0; i < 16; i++) {
-    //         auto s = 0;
-    //         for (int j = 0; j < _buffer_length; j++) {
-    //             s += (_buffer[j] >> i) & 1;
-    //         }
-    //         if ((s >= _buffer2_3rds) && (state >> i & 1)) {
-    //             state |= 1 << i;
-    //         }
-    //         else {
-    //             state &= ~(1 << i);
-    //         }
-    //     }
-    // #ifdef ROEY_LAYOUT
-    //     state = one_or_both(3, 2, state, _state);
-    //     state = one_or_both(5, 0, state, _state);
-    // #else
-    //     state = one_or_both(4, 6, state, _state);
-    //     state = one_or_both(9, 10, state, _state);
-    // #endif
 
         _state = state;
 

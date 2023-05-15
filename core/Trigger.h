@@ -1,17 +1,7 @@
-//
-//  Trigger.h
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/08/14.
-//  Copyright (c) 2014 Vladyslav Lytvynenko. All rights reserved.
-//
-
-#ifndef __Spotykach__Scheduler__
-#define __Spotykach__Scheduler__
+#pragma once
 
 #include "IGenerator.h"
 #include "ITrigger.h"
-#include "ILFO.h"
 #include <random>
 
 static inline void adjustNextIndex(uint32_t* points, uint32_t pointsCount, uint32_t iterator, uint32_t& nextIndex) {
@@ -27,52 +17,71 @@ static inline void adjustNextIndex(uint32_t* points, uint32_t pointsCount, uint3
     nextIndex = newNextIndex;
 }
 
+namespace vlly {
+namespace spotykach {
+
 class Trigger: public ITrigger {
 public:
     Trigger(IGenerator& inGenerator);
-    
-    uint32_t pointsCount() override { return _pointsCount; };
-    uint32_t beatsPerPattern() override { return _beatsPerPattern; };
-    void prepareMeterPattern(int, int) override;
-    void prepareCWordPattern(int, int) override;
-    
-    void one_shot(bool) override;
-    void next(bool) override;
-    
+
+    uint32_t beats_per_pattern() override { return _beats_per_pattern; };
+
+    std::array<uint32_t, kGrid_Count> pattern_indexes() { return _pattern_indexes; }
+    void init_pattern_indexes(std::array<uint32_t, kGrid_Count> indexes) override;
+    uint32_t next_pattern() override;
+    uint32_t prev_pattern() override;
+
+    void prepare_meter_pattern(uint32_t step, uint32_t shift) override;
+    void prepare_cword_pattern(uint32_t onsets, uint32_t shift) override;
+
+    void on_pattern_changed(std::function<void(uint32_t)> on_changed) override;
+
+    void set_grid(float grid) override;
+    void set_shift(float shift) override;
+    void set_repeats(float repeats) override;
+    void set_retrigger(float retrigger) override;
+
+    void next(bool engaged) override;
+
+    bool is_locking() override { return _ticks_till_unlock > 0; };
+
     void reset() override;
-    
-    void setRetrigger(int) override;
-    
-    uint32_t repeats() override { return _repeats; };
-    void setRepeats(int) override;
-    
-    bool locking() override { return _ticksTillUnlock > 0; };
-    
-    void set_index(int ndx) {
-        index = ndx;
-    }
-    int index;
 
 private:
-    void adjustIterator();
-    void adjustRepeatsIfNeeded();
+    struct
+    {
+        float repeats = 1.f;
+    } _raw;
+
+    uint32_t set_pattern_index(uint32_t index);
+    void prepare_pattern();
+    void adjust_iterator();
+    void adjust_repeats();
 
     IGenerator& _generator;
 
-    std::array<uint32_t, 64> _triggerPoints;
-    uint32_t _pointsCount;
-    uint32_t _iterator;
-    uint32_t _nextPointIndex;
-    uint32_t _beatsPerPattern;
-    uint32_t _framesPerBeat;
+    std::function<void(uint32_t)> _on_pattern_changed;
 
-    uint32_t _ticksTillUnlock;
-    
+    Grid _grid;
+    std::array<uint32_t, kGrid_Count> _pattern_indexes;
+    std::array<uint32_t, 64> _trigger_points;
+    uint32_t _points_count;
+    uint32_t _beats_per_pattern;
+    uint32_t _next_point_index;
+    uint32_t _iterator;
+
+    uint32_t _onsets;
     uint32_t _repeats;
+    uint32_t _step;
+    uint32_t _shift;
+
+    uint32_t _ticks_till_unlock;
+
     uint32_t _retrigger;
     uint32_t _repeats_to_retrigger;
     uint32_t _retrigger_distance;
     float _onset;
 };
 
-#endif
+}
+}

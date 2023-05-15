@@ -1,41 +1,104 @@
-//
-//  Trigger.cpp
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/08/14.
-//  Copyright (c) 2014 Vladyslav Lytvynenko. All rights reserved.
-//
-
-#include "Trigger.h"
+#include "trigger.h"
 #include <cmath>
 #include <algorithm>
 #include "globals.h"
-#include "../common/deb.h"
+
+namespace vlly {
+namespace spotykach {
 
 Trigger::Trigger(IGenerator& inGenerator) :
-    _generator          { inGenerator },
-    _pointsCount        { 0 },
-    _iterator           { 0 },
-    _nextPointIndex     { 0 },
-    _beatsPerPattern    { 0 },
-    _ticksTillUnlock    { 0 },
-    _repeats            { INT32_MAX },
-    _retrigger          { 0 },
-    _repeats_to_retrigger { 0 },
-    _retrigger_distance { 0 },
-    _onset              { 0 }
+    _generator              { inGenerator },
+    _grid                   { Grid::c_word },
+    _pattern_indexes        { 6, 4 },
+    _points_count           { 9 },
+    _beats_per_pattern      { 4 },
+    _next_point_index       { 0 },
+    _iterator               { 0 },
+    _onsets                 { 9 },
+    _repeats                { 9 },
+    _ticks_till_unlock      { 0 },
+    _retrigger              { 0 },
+    _repeats_to_retrigger   { 0 },
+    _retrigger_distance     { 0 },
+    _onset                  { 0 }
     {}
 
-void Trigger::prepareCWordPattern(int onsets, int shift) {
-    _pointsCount = 0;
-    _triggerPoints.fill(0);
-    const size_t size = 16;
-    int y = onsets, a = y;
-    int x = size - onsets, b = x;
+
+void Trigger::init_pattern_indexes(std::array<uint32_t, kGrid_Count> indexes) {
+    _pattern_indexes = indexes;
+}
+
+uint32_t Trigger::next_pattern() {
+    auto index = _pattern_indexes[uint32_t(_grid)];
+    return set_pattern_index(++index);
+}
+
+uint32_t Trigger::prev_pattern() {
+    auto index = _pattern_indexes[uint32_t(_grid)];
+    return set_pattern_index(-- index);
+}
+
+uint32_t Trigger::set_pattern_index(uint32_t index) {
+    auto step = _step;
+    auto onsets = _onsets;
+    uint32_t max_index = _grid == Grid::even ? EvenStepsCount - 1 : CWordsCount - 1;
+    index = std::max(std::min(index, max_index), 0ul);
+
+    _pattern_indexes[uint32_t(_grid)] = index;
+
+    switch (_grid) {
+        case Grid::even: step = EvenSteps[index]; break;
+        case Grid::c_word: onsets = CWords[index]; step = 1; /*1/16*/ break;
+    }
+
+    if (step != _step || onsets != _onsets) {
+        _step = step;
+        _onsets = onsets;
+        prepare_pattern();
+    }
+
+    return index;
+}
+
+void Trigger::set_grid(float normVal) {
+    Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
+    if (grid != _grid) {
+        _grid = grid;
+        set_pattern_index(_pattern_indexes[uint32_t(_grid)]);
+        prepare_pattern();
+    }
+}
+
+void Trigger::set_shift(float normVal) {
+    float shiftValue = static_cast<uint32_t>(normVal * 15);
+    _shift = shiftValue;
+    prepare_pattern();
+}
+
+void Trigger::prepare_pattern() {
+    if (_grid == Grid::c_word) {
+        prepare_cword_pattern(_onsets, _shift);
+    }
+    else {
+        prepare_meter_pattern(_step, _shift);
+    }
+    if (_on_pattern_changed) _on_pattern_changed(_step);
+}
+
+void Trigger::on_pattern_changed(std::function<void (uint32_t)> on_changed) {
+    _on_pattern_changed = on_changed;
+}
+
+void Trigger::prepare_cword_pattern(uint32_t onsets, uint32_t shift) {
+    _points_count = 0;
+    _trigger_points.fill(0);
+    const uint32_t size = 16;
+    uint32_t y = onsets, a = y;
+    uint32_t x = size - onsets, b = x;
     std::array<char, size> pattern;
-    
+
     pattern[0] = 1;
-    
+
     size_t i = 1;
     while (a != b) {
         if (a > b) {
@@ -60,67 +123,70 @@ void Trigger::prepareCWordPattern(int onsets, int shift) {
             i++;
         }
     }
-    
-    _beatsPerPattern = kBeatsPerMeasure;
-    
+
+    _beats_per_pattern = kBeatsPerMeasure;
+
     auto ticks_per_16th = kTicksPerBeat / 4;
-    auto ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
-    for (size_t i = 0; i < pattern.size(); i++) {
+    auto ticks_per_pattern = _beats_per_pattern * kTicksPerBeat;
+    for (uint32_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
         auto point = i * ticks_per_16th + shift;
         if (point >= ticks_per_pattern) {
             point -= ticks_per_pattern;
         }
-        _triggerPoints[_pointsCount] = point;
-        _pointsCount ++;
+        _trigger_points[_points_count] = point;
+        _points_count ++;
     }
-    adjustIterator();
+    adjust_repeats();
+    adjust_iterator();
 }
 
-void Trigger::prepareMeterPattern(int step, int shift) {
-    _pointsCount = 0;
-    _triggerPoints.fill(0);
-    int pattern_length { 0 };
+void Trigger::prepare_meter_pattern(uint32_t step, uint32_t shift) {
+    _points_count = 0;
+    _trigger_points.fill(0);
+    uint32_t pattern_length { 0 };
     while (pattern_length % kTicksPerBeat || pattern_length < kTicksPerBeat * kBeatsPerMeasure) {
-        _triggerPoints[_pointsCount] = pattern_length;
-        _pointsCount ++;
+        _trigger_points[_points_count] = pattern_length;
+        _points_count ++;
         pattern_length += step;
     }
-    _beatsPerPattern = pattern_length / kTicksPerBeat;
-    uint32_t ticks_per_pattern = _beatsPerPattern * kTicksPerBeat;
-    for (uint32_t i = 0; i < _pointsCount; i++) {
-        auto point = _triggerPoints[i] + shift;
+    _beats_per_pattern = pattern_length / kTicksPerBeat;
+    uint32_t ticks_per_pattern = _beats_per_pattern * kTicksPerBeat;
+    for (uint32_t i = 0; i < _points_count; i++) {
+        auto point = _trigger_points[i] + shift;
         if (point >= ticks_per_pattern) {
             point -= ticks_per_pattern;
         }
-        _triggerPoints[i] = point;
+        _trigger_points[i] = point;
     }
-    adjustIterator();
+    adjust_repeats();
+    adjust_iterator();
 }
 
-void Trigger::setRetrigger(int retrigger) {
-    _retrigger = retrigger;
+void Trigger::adjust_repeats() {
+    auto rnd = round(_raw.repeats * _points_count);
+    _repeats = std::max(static_cast<int>(rnd), 1);
 }
 
-void Trigger::adjustIterator() {
-    adjustNextIndex(_triggerPoints.data(), _pointsCount, _iterator, _nextPointIndex);
+void Trigger::adjust_iterator() {
+    adjustNextIndex(_trigger_points.data(), _points_count, _iterator, _next_point_index);
 }
 
-void Trigger::setRepeats(int repeats) {
-    _repeats = _pointsCount && repeats > _pointsCount ? _pointsCount : repeats;
+void Trigger::set_retrigger(const float norm_val) {
+    _retrigger = round(norm_val * 16);
 }
 
-void Trigger::one_shot(bool reverse) {
-    _generator.activate_slice(0, reverse ? -1 : 1);
+void Trigger::set_repeats(const float repeats) {
+    _raw.repeats = repeats;
 }
 
-void Trigger::next(bool engaged) {
-    if (_ticksTillUnlock > 0) _ticksTillUnlock--;
-    if (_iterator == _triggerPoints[_nextPointIndex]) {
-        if (engaged && _nextPointIndex < _repeats) {
+void Trigger::next(const bool engaged) {
+    if (_ticks_till_unlock > 0) _ticks_till_unlock--;
+    if (_iterator == _trigger_points[_next_point_index]) {
+        if (engaged && _next_point_index < _repeats) {
             if (_retrigger) {
                 _repeats_to_retrigger ++;
-                _retrigger_distance += _triggerPoints[_nextPointIndex]; 
+                _retrigger_distance += _trigger_points[_next_point_index];
                 if (_repeats_to_retrigger % _retrigger == 0) {
                     _onset += static_cast<float>(_retrigger_distance) / kTicksPerBeat;
                     if (_onset >= 2048.f) _onset = 0;
@@ -129,11 +195,11 @@ void Trigger::next(bool engaged) {
                 }
             }
             _generator.activate_slice(_onset, 0);
-            _ticksTillUnlock = 1;
+            _ticks_till_unlock = 1;
         }
-        _nextPointIndex = (_nextPointIndex + 1) % _pointsCount;
+        _next_point_index = (_next_point_index + 1) % _points_count;
     }
-    _iterator = (_iterator + 1) % (_beatsPerPattern * kTicksPerBeat);
+    _iterator = (_iterator + 1) % (_beats_per_pattern * kTicksPerBeat);
 }
 
 void Trigger::reset() {
@@ -141,6 +207,9 @@ void Trigger::reset() {
     _repeats_to_retrigger = 0;
     _retrigger_distance = 0;
     _iterator = 0;
-    _nextPointIndex = 0;
-    _ticksTillUnlock = 0;
+    _next_point_index = 0;
+    _ticks_till_unlock = 0;
+}
+
+}
 }

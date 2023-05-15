@@ -19,11 +19,11 @@ void Controller::initialize(DaisySeed& hw, Core& core) {
         set_persisted(core);
     }
     else {
-        auto i_a = core.engineAt(0).pattern_idexes();
+        auto i_a = core.engineAt(0).trig().pattern_indexes();
         store_pattern_index_a(i_a[0], Grid::even);
         store_pattern_index_a(i_a[1], Grid::c_word);
 
-        auto i_b = core.engineAt(1).pattern_idexes();
+        auto i_b = core.engineAt(1).trig().pattern_indexes();
         store_pattern_index_b(i_b[0], Grid::even);
         store_pattern_index_b(i_b[1], Grid::c_word);
     }
@@ -52,29 +52,15 @@ using Target = DescreteSensor::Target;
 void Controller::init_sensor(Core& core) {
     _sensor.initialize();
 
-    auto& e_a = core.engineAt(0);
-    auto& e_b = core.engineAt(1);
+    auto& t_a = core.engineAt(0).trig();
+    auto& t_b = core.engineAt(1).trig();
 
     _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
 
-    _sensor.set_on_touch([&e_a, this]{ 
-        if (this->_rec_a) {
-            e_a.clear_buffer();
-        }
-        else {
-            this->store_pattern_index_a(e_a.prev_pattern(), e_a.grid()); 
-        }
-    }, Target::PatternMinusA);
-    _sensor.set_on_touch([&e_a, this]{ this->store_pattern_index_a(e_a.next_pattern(), e_a.grid()); }, Target::PatternPlusA);
-    _sensor.set_on_touch([&e_b, this]{ 
-        if (this->_rec_b) {
-            e_b.clear_buffer();
-        }
-        else {
-            this->store_pattern_index_b(e_b.prev_pattern(), e_b.grid()); 
-        }
-    }, Target::PatternMinusB);
-    _sensor.set_on_touch([&e_b, this]{ this->store_pattern_index_b(e_b.next_pattern(), e_b.grid()); }, Target::PatternPlusB);
+    _sensor.set_on_touch([&t_a, this] { this->store_pattern_index_a(t_a.prev_pattern(), t_a.grid()); }, Target::PatternMinusA);
+    _sensor.set_on_touch([&t_a, this] { this->store_pattern_index_a(t_a.next_pattern(), t_a.grid()); }, Target::PatternPlusA);
+    _sensor.set_on_touch([&t_b, this] { this->store_pattern_index_b(t_b.prev_pattern(), t_b.grid()); }, Target::PatternMinusB);
+    _sensor.set_on_touch([&t_b, this] { this->store_pattern_index_b(t_b.next_pattern(), t_b.grid()); }, Target::PatternPlusB);
 }
 
 void Controller::store_pattern_index_a(int index, Grid g) {
@@ -92,10 +78,10 @@ void Controller::store_pattern_index_b(int index, Grid g) {
 }
 
 void Controller::set_persisted(Core& core) {
-    auto& e_a = core.engineAt(0);
-    auto& e_b = core.engineAt(1);
-    e_a.init_pattern_indexes({ _store.even_pattern_a(), _store.cword_pattern_a() });
-    e_b.init_pattern_indexes({ _store.even_pattern_b(), _store.cword_pattern_b() });
+    auto& t_a = core.engineAt(0).trig();
+    auto& t_b = core.engineAt(1).trig();
+    t_a.init_pattern_indexes({ _store.even_pattern_a(), _store.cword_pattern_a() });
+    t_b.init_pattern_indexes({ _store.even_pattern_b(), _store.cword_pattern_b() });
 }
 
 void Controller::set_parameters(Core& core, Leds& leds) {
@@ -119,14 +105,14 @@ void Controller::set_knob_parameters(Core &s) {
         switch (t) {
             case KT::SlicePositionA:    a.setSlicePosition(v);      break;
             case KT::SliceLengthA:      a.setSliceLength(v);        break;
-            case KT::RetriggerA:        a.setRetrigger(v);          break;
+            case KT::RetriggerA:        a.trig().set_retrigger(v);  break;
             case KT::JitterAmountA:     a.setJitterAmount(v);       break;
             case KT::JitterRate:        s.setJitterRate(v);         break;
             case KT::VolumeCrossfade:   s.setVolumeBalance(v);      break;
             case KT::PatternCrossfade:  s.set_pattern_balance(v);   break;
             case KT::SlicePositionB:    b.setSlicePosition(v);      break;
             case KT::SliceLengthB:      b.setSliceLength(v);        break;
-            case KT::RetriggerB:        b.setRetrigger(v);          break;
+            case KT::RetriggerB:        b.trig().set_retrigger(v);  break;
             case KT::JitterAmountB:     b.setJitterAmount(v);       break;
             case KT::Pitch:             
             { 
@@ -148,7 +134,7 @@ void Controller::set_channel_toggles(Engine& e, ChannelToggles& ct, int ei) {
         auto holding_rev = ei == 0 ? _holding_rev_a : _holding_rev_b;
         using Target = ChannelToggles::Target;
         switch (target) {
-            case Target::Grid:      e.set_grid(isOn ? 1 : 0); break;
+            case Target::Grid:      e.trig().set_grid(isOn ? 1 : 0); break;
             case Target::Reverse:   e.setReverse((isOn && !holding_fwd) || holding_rev); break;
             default: {}
         }

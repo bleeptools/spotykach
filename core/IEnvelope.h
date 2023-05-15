@@ -10,8 +10,6 @@
 
 class IEnvelope {
 public:
-    virtual void setDeclick(bool inDeclick) = 0;
-    
     virtual long attackLength() = 0;
     virtual long decayLength() = 0;
     

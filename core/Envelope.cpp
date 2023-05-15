@@ -28,12 +28,15 @@ inline float sine(float x) {
     return x - kCoef3 * x3 + kCoef5 * x5 - kCoef7 * x7;
 }
 
-Envelope::Envelope() {}
-
-void Envelope::setDeclick(bool inDeclick) {
-    _declick = inDeclick;
+Envelope::Envelope():
+    _declick            { true },
+    _attackLength       { 0 },
+    _decayLength        { 0 },
+    _framesPerCrossfade { 0 } 
+{
     measure();
 }
+
 
 void Envelope::setFramesPerCrossfade(long inFrames) {
     _framesPerCrossfade = inFrames;

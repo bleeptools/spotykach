@@ -15,9 +15,8 @@
 class Envelope: public IEnvelope {
     
 public:
-    Envelope();
-    
-    void setDeclick(bool inDeclick) override;
+    Envelope() = default;
+    ~Envelope() = default;
     
     long attackLength() override { return _attackLength; };
     long decayLength() override { return _decayLength; };

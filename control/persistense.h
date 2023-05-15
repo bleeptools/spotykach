@@ -1,11 +1,11 @@
 #include "daisy_seed.h"
 
 struct StoredParams {
-    int even_pattern_a;
-    int cword_pattern_a;
-    int even_pattern_b;
-    int cword_pattern_b; 
-    int tag;
+    uint32_t even_pattern_a;
+    uint32_t cword_pattern_a;
+    uint32_t even_pattern_b;
+    uint32_t cword_pattern_b; 
+    uint32_t tag;
 };
 
 static StoredParams DSY_QSPI_BSS params_qspi;
@@ -24,25 +24,25 @@ public:
         return _params.tag == 3;
     }
 
-    int cword_pattern_a() { return _params.cword_pattern_a; }
+    uint32_t cword_pattern_a() { return _params.cword_pattern_a; }
     void set_cword_pattern_a(int value) { 
         _params.cword_pattern_a = value;
         store();
     }
 
-    int cword_pattern_b() { return _params.cword_pattern_b; }
+    uint32_t cword_pattern_b() { return _params.cword_pattern_b; }
     void set_cword_pattern_b(int value) { 
         _params.cword_pattern_b = value;
         store();
     }
 
-    int even_pattern_a() { return _params.even_pattern_a; }
+    uint32_t even_pattern_a() { return _params.even_pattern_a; }
     void set_even_pattern_a(int value) { 
         _params.even_pattern_a = value;
         store();
     }
 
-    int even_pattern_b() { return _params.even_pattern_b; }
+    uint32_t even_pattern_b() { return _params.even_pattern_b; }
     void set_even_pattern_b(int value) { 
         _params.even_pattern_b = value;
         store();

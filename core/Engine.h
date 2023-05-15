@@ -25,16 +25,10 @@ struct PlaybackParameters {
 };
 
 struct RawParameters {
-    float grid             = -1;
-    float shift            = -1;
     float slicePosition    = -1;
     float sliceLength      = -1;
     
-    float repeats          = -1;
-    float retrigger        = -1;
-    float jitterAmount     = -1;
     bool on                 = false;
-    bool declick            = false;
     bool frozen             = false;
     bool reverse            = false;
 };
@@ -48,48 +42,30 @@ public:
     
     void initialize();
     
-    void set_index(int ndx) { index = ndx; _trigger.set_index(ndx); }
+    ITrigger& trig() { return _trigger; }
+
+    void set_index(int ndx) { index = ndx; }
 
     void set_is_playing(bool value, bool clean);
-
-    void one_shot(bool reverse);
-
-    bool isLocking() { return _trigger.locking(); };
     
     void setSlicePosition(float start);
     void setSliceLength(float slice);
     
     void set_pitch_shift(float value);
-
-    void setShift(float shift);
-
-    std::array<int, kGrid_Count> pattern_idexes() { return _pattern_indexes; }
-    void init_pattern_indexes(std::array<int, kGrid_Count> indexes);
-    int next_pattern();
-    int prev_pattern();
-    void set_grid(float grid);
-    Grid grid() { return _grid; };
-    
-    void setRepeats(float repeats);
-    int repeats() { return _trigger.repeats(); };
-    
-    void setRetrigger(float retrigger);
     
     void setJitterAmount(float value);
     void setJitterRate(float value);
     
-    void setDeclick(bool declick);
-    
     void setReverse(bool reverse);
     
+    void step(bool engaged);
+
     void preprocess(PlaybackParameters p);
     
     void setFrozen(bool frozen);
     void setAntifreeze(bool value);
 
     void set_on_slice(SliceCallback f);
-
-    void step(bool engaged = true);
 
     void process(float in0, float in1, float* out0, float* out1, bool continual, bool reverse);
 
@@ -109,19 +85,11 @@ private:
     
     bool _is_playing;
     float _tempo;
-    
-    Grid _grid;
-    std::array<int, kGrid_Count> _pattern_indexes;
-    int _onsets;
-    int _step;
-    int _shift;
     float _start;
     float _slice;
-    
-    bool _invalidateCrossfade;
+    uint32_t _step;
 
-    int set_pattern_index(int index);
-    void prepare_pattern();
+    bool _invalidate_crossfade;
 };
 }
 }
