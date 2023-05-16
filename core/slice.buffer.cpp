@@ -1,15 +1,8 @@
-//
-//  SliceBuffer.cpp
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 17.05.22.
-//
-
 #include <stdio.h>
 #include <algorithm>
 #include <cstring>
-#include "SliceBuffer.h"
-#include "Buffers.h"
+#include "slice.buffer.h"
+#include "buffers.h"
 
 SliceBuffer::SliceBuffer(): _size { kSliceBufferLength } {
 }

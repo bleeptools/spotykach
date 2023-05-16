@@ -1,12 +1,4 @@
-//
-//  ILFO.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 21.06.22.
-//
-
-#ifndef ILFO_h
-#define ILFO_h
+#pragma once
 
 class ILFO {
 public:
@@ -15,5 +7,3 @@ public:
     virtual float triangleValue() = 0;
     virtual void advance() = 0;
 };
-
-#endif /* ILFO_h */

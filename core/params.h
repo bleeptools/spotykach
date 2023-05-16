@@ -1,15 +1,7 @@
-//
-//  Parameters.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 27.02.22.
-//
+#pragma once
 
-#ifndef Parameters_h
-#define Parameters_h
 #include <array>
 #include <math.h>
-
 
 namespace vlly {
 namespace spotykach {
@@ -59,4 +51,3 @@ namespace spotykach {
     static constexpr int CWordsCount = CWords.size();
 }
 }
-#endif /* Parameters_h */

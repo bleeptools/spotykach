@@ -1,14 +1,7 @@
-//
-//  ITrigger.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 16.03.22.
-//
-
 #pragma once
 
 #include <functional>
-#include "Parameters.h"
+#include "params.h"
 
 namespace vlly {
 namespace spotykach {

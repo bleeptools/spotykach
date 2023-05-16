@@ -1,12 +1,4 @@
-//
-//  IEnvelope.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 14.03.22.
-//
-
-#ifndef IEnvelope_h
-#define IEnvelope_h
+#pragma once
 
 class IEnvelope {
 public:
@@ -20,5 +12,3 @@ public:
     
     virtual ~IEnvelope() {};
 };
-
-#endif /* IEnvelope_h */

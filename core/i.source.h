@@ -1,12 +1,4 @@
-//
-//  ISource.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 14.03.22.
-//
-
-#ifndef ISource_h
-#define ISource_h
+#pragma once
 
 #include <stdint.h>
 
@@ -33,5 +25,3 @@ public:
     
     virtual ~ISource() {};
 };
-
-#endif /* ISource_h */

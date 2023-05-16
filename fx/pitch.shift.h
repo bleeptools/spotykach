@@ -4,7 +4,7 @@
 #include "../common/fcomp.h"
 #include "mi/pitch_shifter.h"
 #include "mi/units.h"
-#include "../core/Buffers.h"
+#include "../core/buffers.h"
 
 class PitchShift {
 public:

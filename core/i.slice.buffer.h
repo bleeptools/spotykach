@@ -1,12 +1,4 @@
-//
-//  ISliceBuffer.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 17.05.22.
-//
-
-#ifndef ISliceBuffer_h
-#define ISliceBuffer_h
+#pragma once
 
 class ISliceBuffer {
 public:
@@ -23,5 +15,3 @@ public:
     
     virtual ~ISliceBuffer() {};
 };
-
-#endif /* ISliceBuffer_h */

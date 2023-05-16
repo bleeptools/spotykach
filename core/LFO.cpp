@@ -5,7 +5,7 @@
 //  Created by Vladyslav Lytvynenko on 21.06.22.
 //
 
-#include "LFO.h"
+#include "lfo.h"
 #include <cmath>
 
 //"Note that in many programming languages, the % operator

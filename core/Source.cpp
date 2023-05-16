@@ -1,16 +1,8 @@
-//
-//  Source.cpp
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/08/14.
-//  Copyright (c) 2014 Vladyslav Lytvynenko. All rights reserved.
-//
-
-#include "Source.h"
+#include "source.h"
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#include "Buffers.h"
+#include "buffers.h"
 
 Source::Source() :
     _bufferLength { kSourceBufferLength },

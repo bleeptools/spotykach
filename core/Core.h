@@ -1,14 +1,7 @@
-//
-//  Core.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 22.05.22.
-//
-
 #pragma once
 
-#include "Engine.h"
-#include "Parameters.h"
+#include "engine.h"
+#include "params.h"
 #include "globals.h"
 #include <array>
 #include <vector>

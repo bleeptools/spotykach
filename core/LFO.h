@@ -1,14 +1,6 @@
-//
-//  LFO.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 21.06.22.
-//
+#pragma once
 
-#ifndef LFO_h
-#define LFO_h
-
-#include "ILFO.h"
+#include "i.lfo.h"
 
 class LFO: public ILFO {
 public:
@@ -24,5 +16,3 @@ private:
     long _framesPerMeasure;
     float _period;
  };
-
-#endif /* LFO_h */

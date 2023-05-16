@@ -1,21 +1,12 @@
-//
-//  Generator.h
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/01/15.
-//  Copyright (c) 2015 Vladyslav Lytvynenko. All rights reserved.
-//
+#pragma once
 
-#ifndef __Spotykach__Synth__
-#define __Spotykach__Synth__
-
-#include "IGenerator.h"
-#include "ISource.h"
-#include "IEnvelope.h"
-#include "ILFO.h"
-#include "Slice.h"
-#include "Parameters.h"
-#include "SliceBuffer.h"
+#include "i.generator.h"
+#include "i.source.h"
+#include "i.envelope.h"
+#include "i.lfo.h"
+#include "slice.h"
+#include "params.h"
+#include "slice.buffer.h"
 #include "globals.h"
 #include <array>
 #include <memory>
@@ -75,5 +66,3 @@ private:
     bool _continual_rev;
     uint32_t _continual_iterator;
 };
-
-#endif /* defined(__Spotykach__Synth__) */

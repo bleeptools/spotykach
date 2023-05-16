@@ -1,17 +1,8 @@
-//
-//  Slice.h
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/08/14.
-//  Copyright (c) 2014 Vladyslav Lytvynenko. All rights reserved.
-//
+#pragma once
 
-#ifndef __Spotykach__Slice__
-#define __Spotykach__Slice__
-
-#include "ISource.h"
-#include "ISliceBuffer.h"
-#include "IEnvelope.h"
+#include "i.source.h"
+#include "i.slice.buffer.h"
+#include "i.envelope.h"
 #include "../fx/pitch.shift.h"
 
 class Slice {
@@ -48,5 +39,3 @@ private :
     
     void next();
 };
-
-#endif

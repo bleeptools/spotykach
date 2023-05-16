@@ -1,8 +1,7 @@
-#include "Engine.h"
+#include "engine.h"
 #include "globals.h"
 #include "../common/fcomp.h"
 #include <algorithm>
-
 
 using namespace vlly;
 using namespace spotykach;

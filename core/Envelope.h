@@ -1,16 +1,7 @@
-//
-//  Envelope.h
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/01/15.
-//  Copyright (c) 2015 Vladyslav Lytvynenko. All rights reserved.
-//
-
-#ifndef __Spotykach__Envelope__
-#define __Spotykach__Envelope__
+#pragma once
 
 #include <stdio.h>
-#include "IEnvelope.h"
+#include "i.envelope.h"
 
 class Envelope: public IEnvelope {
     
@@ -34,5 +25,3 @@ private:
     
     void measure();
 };
-
-#endif /* defined(__Spotykach__Envelope__) */

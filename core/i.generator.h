@@ -1,15 +1,7 @@
-//
-//  IGenerator.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 16.03.22.
-//
+#pragma once
 
-#ifndef IGenerator_h
-#define IGenerator_h
-
-#include "Parameters.h"
-#include "IEnvelope.h"
+#include "params.h"
+#include "i.envelope.h"
 #include <stdint.h>
 #include <algorithm>
 
@@ -34,5 +26,3 @@ public:
 
     virtual ~IGenerator() {};
 };
-
-#endif /* IGenerator_h */

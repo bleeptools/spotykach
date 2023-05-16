@@ -1,8 +1,7 @@
 #pragma once
 
-#include "IGenerator.h"
-#include "ITrigger.h"
-#include <random>
+#include "i.generator.h"
+#include "i.trigger.h"
 
 static inline void adjustNextIndex(uint32_t* points, uint32_t pointsCount, uint32_t iterator, uint32_t& nextIndex) {
     int newNextIndex = 0;

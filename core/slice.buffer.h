@@ -1,15 +1,7 @@
-//
-//  SliceBuffer.h
-//  spotykach_core
-//
-//  Created by Vladyslav Lytvynenko on 17.05.22.
-//
-
-#ifndef SliceBuffer_h
-#define SliceBuffer_h
+#pragma once
 
 #include <vector>
-#include "ISliceBuffer.h"
+#include "i.slice.buffer.h"
 
 class SliceBuffer: public ISliceBuffer {
 public:
@@ -30,5 +22,3 @@ private:
     uint32_t _writeHead;
     float* _buffer[2];
 };
-
-#endif /* SliceBuffer_h */

@@ -6,11 +6,11 @@
 //
 
 #include "core.h"
-#include "Envelope.h"
-#include "Source.h"
-#include "Generator.h"
-#include "Trigger.h"
-#include "LFO.h"
+#include "envelope.h"
+#include "source.h"
+#include "generator.h"
+#include "trigger.h"
+#include "lfo.h"
 #include "../common/fcomp.h"
 
 using namespace vlly;

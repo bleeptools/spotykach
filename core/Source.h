@@ -1,16 +1,6 @@
-//
-//  Source.h
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/08/14.
-//  Copyright (c) 2014 Vladyslav Lytvynenko. All rights reserved.
-//
+#pragma once
 
-#ifndef __Spotykach__Source__
-#define __Spotykach__Source__
-
-#include <vector>
-#include "ISource.h"
+#include "i.source.h"
 
 class Source: public ISource {
 public:
@@ -45,5 +35,3 @@ private:
     uint32_t _readHead;
     uint32_t _sycleStart;
 };
-
-#endif

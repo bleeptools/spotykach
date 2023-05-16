@@ -1,12 +1,4 @@
-//
-//  Envelope.cpp
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/01/15.
-//  Copyright (c) 2015 Vladyslav Lytvynenko. All rights reserved.
-//
-
-#include "Envelope.h"
+#include "envelope.h"
 
 static const float kP      = 3.1415926535898;
 static const float kP_2    = 1.5707963267949;

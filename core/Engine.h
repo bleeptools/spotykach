@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ITrigger.h"
-#include "ISource.h"
-#include "IEnvelope.h"
-#include "IGenerator.h"
-#include "ILFO.h"
-#include "Parameters.h"
+#include "i.trigger.h"
+#include "i.source.h"
+#include "i.envelope.h"
+#include "i.generator.h"
+#include "i.lfo.h"
+#include "params.h"
 #include "../fx/pitch.shift.h"
 
 namespace vlly {

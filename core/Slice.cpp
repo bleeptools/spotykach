@@ -1,12 +1,4 @@
-//
-//  Slice.cpp
-//  Spotykach
-//
-//  Created by Vladyslav Lytvynenko on 17/08/14.
-//  Copyright (c) 2014 Vladyslav Lytvynenko. All rights reserved.
-//
-
-#include "Slice.h"
+#include "slice.h"
 #include "globals.h"
 
 Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
