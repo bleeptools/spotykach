@@ -30,6 +30,7 @@ Core::Core() {
     _releasePool.emplace_back(s_a);
     _releasePool.emplace_back(g_a);
     _releasePool.emplace_back(t_a);
+    t_a->index = 1;
 
     auto e_b = std::make_shared<Envelope>();
     auto s_b = std::make_shared<Source>();
@@ -41,6 +42,7 @@ Core::Core() {
     _releasePool.emplace_back(s_b);
     _releasePool.emplace_back(g_b);
     _releasePool.emplace_back(t_b);
+    t_b->index = 2;
     
 
     g_a->set_on_update([this, g_b]{ if (this->_cascade) g_b->reset(); });
@@ -153,7 +155,7 @@ void Core::initialize() const {
     for (auto e: _engines) e->initialize();
 }
 
-void Core::step() {
+void Core::pulse() {
     auto& e1 = engineAt(0);
     e1.step(true);
     
@@ -167,7 +169,7 @@ void Core::set_playback_controls(PlaybackControls c) {
 }
 
 void Core::preprocess(PlaybackParameters p) const {
-    for (auto e: _engines) e->preprocess(p);
+    for (auto& e: _engines) e->preprocess(p);
 }
 
 void Core::process(const float* const* in_buf, float** out_buf, int num_frames) const {

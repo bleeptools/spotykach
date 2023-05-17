@@ -165,7 +165,7 @@ void Trigger::prepare_meter_pattern(uint32_t step, uint32_t shift) {
 
 void Trigger::adjust_repeats() {
     auto rnd = round(_raw.repeats * _points_count);
-    _repeats = std::max(static_cast<int>(rnd), 1);
+    _repeats = std::max(static_cast<uint32_t>(rnd), 1ul);
 }
 
 void Trigger::adjust_iterator() {

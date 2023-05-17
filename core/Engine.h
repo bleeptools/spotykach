@@ -34,7 +34,9 @@ public:
     
     void initialize();
     
-    ITrigger& trig() { return _trigger; }
+    ITrigger& trig() { 
+        return _trigger; 
+    }
 
     void set_index(int ndx) { index = ndx; }
 

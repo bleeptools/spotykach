@@ -11,7 +11,7 @@ public:
         SliceLengthA,
         RetriggerA,
         JitterAmountA,
-        JitterRate,
+        Tempo,
         VolumeCrossfade,
         PatternCrossfade,
         Pitch,
@@ -38,7 +38,7 @@ private:
         Knob::Target::SliceLengthA,
         Knob::Target::RetriggerA,
         Knob::Target::JitterAmountA,
-        Knob::Target::JitterRate,
+        Knob::Target::Tempo,
         Knob::Target::VolumeCrossfade,
         Knob::Target::PatternCrossfade,
         Knob::Target::Pitch,
@@ -72,7 +72,7 @@ private:
             case KT::SliceLengthA:      return A9;
             case KT::RetriggerA:        return A8;
             case KT::JitterAmountA:     return A11;
-            case KT::JitterRate:        return A7;
+            case KT::Tempo:        return A7;
             case KT::VolumeCrossfade:   return A5;
             case KT::PatternCrossfade:  return A6;
             case KT::Pitch:             return A4;

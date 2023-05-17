@@ -1,6 +1,6 @@
 #include "daisy_seed.h"
 #include "core/globals.h"
-#include "core/Core.h"
+#include "core/core.h"
 #include "control/controller.h"
 #include "control/sync.h"
 #include "control/leds.h"
@@ -28,7 +28,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		p.sampleRate = kSampleRate;
 		cnfg_cnt = 0;
 	}
-
+	snc.advance(size);
 	core.preprocess(p);
 	core.process(in, out, size);
 }
@@ -59,7 +59,7 @@ int main(void) {
 		static uint32_t counter = 0;
 		if (++counter == count_limit ) {
 			counter = 0;
-			controller.set_parameters(core, leds);
+			controller.set_parameters(core, leds, snc);
 		}
 	}
 }

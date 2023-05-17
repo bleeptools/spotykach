@@ -21,12 +21,12 @@ struct PlaybackControls {
 class Core {
 public:
     Core();
-    ~Core() {};
+    ~Core() = default;
     
     Engine& engineAt(int index) const;
     long enginesCount() const;
 
-    void step();
+    void pulse();
 
     void setMutex(bool mutex);
     

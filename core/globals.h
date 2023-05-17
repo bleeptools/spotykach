@@ -1,14 +1,14 @@
 #pragma once
 
-static const int kBeatsPerMeasure       = 4;
-static const int kTicksPerBeat          = 4;
-static const float kSecondsPerMinute    = 60.0;
+static const uint32_t kBeatsPerMeasure  { 4 };
+static const uint32_t kTicksPerBeat     { 96 };
+static const float kSecondsPerMinute    { 60.0 };
 
-static const int kEnginesCount = 2;
+static const uint32_t kEnginesCount     { 2 };
 
-static const int kSlicesCount = 3;
-static const int kSliceMaxSeconds { 2 };
-static const int kSourceMaxSeconds { 10 };
+static const uint32_t kSlicesCount      { 3 };
+static const uint32_t kSliceMaxSeconds  { 2 };
+static const uint32_t kSourceMaxSeconds { 10 };
 
-static const int kChannelsCount { 2 };
-static const int kSampleRate { 48000 };
+static const uint32_t kChannelsCount    { 2 };
+static const uint32_t kSampleRate       { 48000 };

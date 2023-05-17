@@ -1,5 +1,9 @@
 #include "sync.h"
 #include "layout.h"
+#include "../common/fcomp.h"
+
+const float kTempoMin = 30;
+const float kTempoMax = 250;
 
 void Sync::run(vlly::spotykach::Core& core) {
     _core = &core;
@@ -12,16 +16,31 @@ void Sync::run(vlly::spotykach::Core& core) {
 	g.Init(cfg);
 }
 
+void Sync::advance(uint32_t by_samples) {
+    _sample_count += by_samples;
+    if (_sample_count >= _samples_per_tick) {
+        _sample_count %= _samples_per_tick;
+        _core->pulse();
+    }
+}
+
 void Sync::pull(daisy::DaisySeed& hw) {
     auto new_state = g.Read();
     if (_last_state && !new_state) {
-        tick();
+        clock_in_tick();
     }
     _last_state = new_state;
 }
 
 float Sync::tempo() {
     return _tempo;
+}
+
+void Sync::set_tempo(float norm_value) {
+    if (fcomp(norm_value, _raw_tempo)) return;
+    _raw_tempo = norm_value;
+    _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
+    _samples_per_tick = static_cast<uint32_t>(round(static_cast<float>(kSamplesPerTickKof) / _tempo));
 }
 
 void Sync::reset() {
@@ -32,7 +51,7 @@ void Sync::reset() {
     _dev_cnt = 0;
 }
 
-void Sync::tick() {
+void Sync::clock_in_tick() {
     auto t = daisy::System::GetNow();
     auto delta = t - _ptime;
     if (_ptime > 0) {
@@ -42,13 +61,12 @@ void Sync::tick() {
     }
     _ptime = t;
 
-    _beat.ticks++;
-    if (_beat.ticks == kTicksPerBeat) {
-        _beat.ticks = 0;
-        _beat.beats ++;
-    }
-    
-    _core->step();
+    // _beat.ticks++;
+    // if (_beat.ticks == kTicksPerBeat) {
+    //     _beat.ticks = 0;
+    //     _beat.beats ++;
+    // }
+    // _core->pulse();
 }
 
 void Sync::push(uint32_t interval) {

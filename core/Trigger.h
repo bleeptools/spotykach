@@ -48,6 +48,8 @@ public:
 
     void reset() override;
 
+    int index = -1;
+
 private:
     struct
     {

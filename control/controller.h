@@ -9,6 +9,7 @@
 #include "descrete.sensor.h"
 #include "leds.h"
 #include "persistense.h"
+#include "sync.h"
 
 namespace vlly {
 namespace spotykach {
@@ -20,7 +21,7 @@ public:
 
     void initialize(daisy::DaisySeed& hw, Core& s);
 
-    void set_parameters(Core& core, Leds& leds);
+    void set_parameters(Core& core, Leds& leds, Sync& snc);
 
     bool is_playing();
 
@@ -34,7 +35,7 @@ private:
     void init_knobs(daisy::DaisySeed& hw);
     void init_toggles(daisy::DaisySeed& hw);
     void set_persisted(Core& core);
-    void set_knob_parameters(Core &s);
+    void set_knob_parameters(Core &s, Sync& snc);
     void set_channel_toggles(Engine& e, ChannelToggles& ct, int i);
     void set_global_toggles(Core& s);
     void read_sensor(Core& core, Leds& leds);

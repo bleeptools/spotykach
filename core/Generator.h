@@ -35,7 +35,9 @@ public:
 
     void set_on_slice(SliceCallback) override;
 
-    uint32_t frames_per_slice() override { return _frames_per_slice; }
+    uint32_t frames_per_slice() override { 
+        return _frames_per_slice; 
+    }
     
     void set_needs_reset_slices() override;
 

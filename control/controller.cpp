@@ -84,36 +84,36 @@ void Controller::set_persisted(Core& core) {
     t_b.init_pattern_indexes({ _store.even_pattern_b(), _store.cword_pattern_b() });
 }
 
-void Controller::set_parameters(Core& core, Leds& leds) {
+void Controller::set_parameters(Core& core, Leds& leds, Sync& snc) {
     for (int i = 0; i < core.enginesCount(); i++) set_channel_toggles(core.engineAt(i), _channel_toggles[i], i);
     set_global_toggles(core);
 
     read_sensor(core, leds);
 
-    set_knob_parameters(core);
+    set_knob_parameters(core, snc);
 };
 
 using namespace vlly;
 using namespace spotykach;
 using KT = Knob::Target;
-void Controller::set_knob_parameters(Core &s) {
+void Controller::set_knob_parameters(Core &s, Sync &snc) {
     auto& a = s.engineAt(0);
     auto& b = s.engineAt(1);
     for (size_t i = 0; i < _knobs.size(); i++) {
         auto t = _knobs[i].target();
         auto v = _knobs[i].value();
         switch (t) {
-            case KT::SlicePositionA:    a.set_slice_position(v);      break;
-            case KT::SliceLengthA:      a.set_slice_length(v);        break;
+            case KT::SlicePositionA:    a.set_slice_position(v);    break;
+            case KT::SliceLengthA:      a.set_slice_length(v);      break;
             case KT::RetriggerA:        a.trig().set_retrigger(v);  break;
-            case KT::JitterAmountA:     a.set_jitter_amount(v);       break;
-            case KT::JitterRate:        s.setJitterRate(v);         break;
+            case KT::JitterAmountA:     a.set_jitter_amount(v);     break;
+            case KT::Tempo:             snc.set_tempo(v);           break;
             case KT::VolumeCrossfade:   s.setVolumeBalance(v);      break;
             case KT::PatternCrossfade:  s.set_pattern_balance(v);   break;
-            case KT::SlicePositionB:    b.set_slice_position(v);      break;
-            case KT::SliceLengthB:      b.set_slice_length(v);        break;
+            case KT::SlicePositionB:    b.set_slice_position(v);    break;
+            case KT::SliceLengthB:      b.set_slice_length(v);      break;
             case KT::RetriggerB:        b.trig().set_retrigger(v);  break;
-            case KT::JitterAmountB:     b.set_jitter_amount(v);       break;
+            case KT::JitterAmountB:     b.set_jitter_amount(v);     break;
             case KT::Pitch:             
             { 
                 a.set_pitch_shift(v); 
