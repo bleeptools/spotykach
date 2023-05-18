@@ -57,7 +57,7 @@ void Sync::clock_in_tick() {
     auto delta = t - _ptime;
     if (_ptime > 0) {
         push(delta);
-        _tempo = tempo(avg());
+        _tempo = std::min(tempo(avg()), kTempoMax);
         checkDeviation(delta);
     }
     _ptime = t;
