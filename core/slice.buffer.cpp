@@ -4,6 +4,9 @@
 #include "slice.buffer.h"
 #include "buffers.h"
 
+using namespace blptls;
+using namespace spotykach;
+
 SliceBuffer::SliceBuffer(): _size { kSliceBufferLength } {
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
     struct Channel {
         int index;

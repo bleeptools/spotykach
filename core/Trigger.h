@@ -16,7 +16,7 @@ static inline void adjustNextIndex(uint32_t* points, uint32_t pointsCount, uint3
     nextIndex = newNextIndex;
 }
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
 
 class Trigger: public ITrigger {

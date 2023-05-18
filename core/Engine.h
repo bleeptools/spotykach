@@ -5,10 +5,10 @@
 #include "i.envelope.h"
 #include "i.generator.h"
 #include "i.lfo.h"
-#include "params.h"
+#include "globals.h"
 #include "../fx/pitch.shift.h"
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
 
 struct PlaybackParameters {

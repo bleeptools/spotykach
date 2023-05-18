@@ -1,14 +1,14 @@
 #pragma once
 
 #include "engine.h"
-#include "params.h"
+#include "globals.h"
 #include "globals.h"
 #include <array>
 #include <vector>
 #include <memory>
 
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
 
 struct PlaybackControls {

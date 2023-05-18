@@ -1,9 +1,9 @@
 #pragma once
 
 #include <functional>
-#include "params.h"
+#include "globals.h"
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
 
 class ITrigger {

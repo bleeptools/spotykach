@@ -1,6 +1,6 @@
 #pragma once
 
-#include "params.h"
+#include "globals.h"
 #include "i.envelope.h"
 #include <stdint.h>
 #include <algorithm>

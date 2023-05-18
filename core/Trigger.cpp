@@ -3,7 +3,7 @@
 #include <algorithm>
 #include "globals.h"
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
 
 Trigger::Trigger(IGenerator& inGenerator) :

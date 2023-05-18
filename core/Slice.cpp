@@ -1,6 +1,9 @@
 #include "slice.h"
 #include "globals.h"
 
+using namespace blptls;
+using namespace spotykach;
+
 Slice::Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope) :
     _source     { inSource },
     _envelope   { inEnvelope },

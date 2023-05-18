@@ -5,6 +5,9 @@
 #include "daisy_seed.h"
 #include "globals.h"
 
+namespace blptls {
+namespace spotykach {
+
 static const size_t kSourceBufferLength = kSourceMaxSeconds * kSampleRate;
 static const size_t kSliceBufferLength = kSliceMaxSeconds * kSampleRate;
 
@@ -81,7 +84,7 @@ private:
     };
 
     int _providedSourceBufCount { 0 };
-    static const int _srcBufsCount { kEnginesCount * kChannelsCount };
+    static const int _srcBufsCount = kEnginesCount * kChannelsCount;
     float* _srcBufs[_srcBufsCount] = {
         _srcBuf1L,
         _srcBuf1R,
@@ -90,7 +93,7 @@ private:
     };
 
     int _providedSliceBufCount { 0 };
-    static const int _slcBufsCount { kSlicesCount * kEnginesCount * kChannelsCount };
+    static const int _slcBufsCount = kSlicesCount * kEnginesCount * kChannelsCount;
     float* _slcBufs[_slcBufsCount] = {
         _slcBuf1L,
         _slcBuf1R,
@@ -107,7 +110,7 @@ private:
     };
 
     int _provided_pitch_buf_count { 0 };
-    static const int _pitch_buf_count { (kSlicesCount + 1) * kEnginesCount };
+    static const int _pitch_buf_count = (kSlicesCount + 1) * kEnginesCount;
     uint16_t* _pitch_bufs[_pitch_buf_count] = {
         _pitch_buf_1,
         _pitch_buf_2,
@@ -119,3 +122,6 @@ private:
         _pitch_buf_8
     };
 };
+
+}
+}

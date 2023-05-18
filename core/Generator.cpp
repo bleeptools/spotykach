@@ -1,10 +1,10 @@
 #include "generator.h"
-#include "params.h"
+#include "globals.h"
 #include "buffers.h"
 #include "globals.h"
 #include "../common/fcomp.h"
 
-using namespace vlly;
+using namespace blptls;
 using namespace spotykach;
 
 struct Modulations {

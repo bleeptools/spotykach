@@ -5,6 +5,9 @@
 #include "i.envelope.h"
 #include "../fx/pitch.shift.h"
 
+namespace blptls {
+namespace spotykach {
+
 class Slice {
 public:
     Slice(ISource& inSource, ISliceBuffer& inBuffer, IEnvelope& inEnvelope);
@@ -39,3 +42,6 @@ private :
     
     void next();
 };
+
+}
+}

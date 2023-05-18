@@ -6,6 +6,9 @@
 #include "mi/units.h"
 #include "../core/buffers.h"
 
+namespace blptls {
+namespace spotykach {
+
 class PitchShift {
 public:
     PitchShift() = default;
@@ -52,3 +55,6 @@ private:
     clouds::PitchShifter ps_;
     bool _bypass = true;
 };
+
+}
+}

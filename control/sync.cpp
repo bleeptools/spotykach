@@ -2,10 +2,13 @@
 #include "layout.h"
 #include "../common/fcomp.h"
 
+using namespace blptls;
+using namespace spotykach;
+
 const float kTempoMin = 30;
 const float kTempoMax = 250;
 
-void Sync::run(vlly::spotykach::Core& core) {
+void Sync::run(Core& core) {
     _core = &core;
     daisy::GPIO::Config cfg;
 #ifdef ROEY_LAYOUT

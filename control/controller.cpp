@@ -1,6 +1,6 @@
 #include "controller.h"
 
-using namespace vlly;
+using namespace blptls;
 using namespace spotykach;
 
 using namespace daisy;
@@ -93,7 +93,7 @@ void Controller::set_parameters(Core& core, Leds& leds, Sync& snc) {
     set_knob_parameters(core, snc);
 };
 
-using namespace vlly;
+using namespace blptls;
 using namespace spotykach;
 using KT = Knob::Target;
 void Controller::set_knob_parameters(Core &s, Sync &snc) {

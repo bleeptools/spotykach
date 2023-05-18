@@ -4,6 +4,10 @@
 #include "hid/led.h"
 #include "../core/globals.h"
 
+namespace blptls {
+namespace spotykach {
+
+
 class Leds {
 public:
     Leds() = default;
@@ -86,3 +90,6 @@ private:
     uint32_t _max_duration = 2634520;
     uint32_t _sus_duration = 100000;
 };
+
+}
+}

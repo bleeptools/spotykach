@@ -11,7 +11,7 @@
 #include "persistense.h"
 #include "sync.h"
 
-namespace vlly {
+namespace blptls {
 namespace spotykach {
 
 class Controller {

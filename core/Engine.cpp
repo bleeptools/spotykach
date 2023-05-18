@@ -3,7 +3,7 @@
 #include "../common/fcomp.h"
 #include <algorithm>
 
-using namespace vlly;
+using namespace blptls;
 using namespace spotykach;
 
 inline int gridStepCount(Grid grid) {

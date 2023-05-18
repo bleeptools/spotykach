@@ -5,12 +5,14 @@
 #include "i.envelope.h"
 #include "i.lfo.h"
 #include "slice.h"
-#include "params.h"
+#include "globals.h"
 #include "slice.buffer.h"
 #include "globals.h"
 #include <array>
 #include <memory>
 
+namespace blptls {
+namespace spotykach {
 
 class Generator: public IGenerator {
 public:
@@ -68,3 +70,6 @@ private:
     bool _continual_rev;
     uint32_t _continual_iterator;
 };
+
+}
+}

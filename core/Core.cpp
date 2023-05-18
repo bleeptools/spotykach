@@ -13,7 +13,7 @@
 #include "lfo.h"
 #include "../common/fcomp.h"
 
-using namespace vlly;
+using namespace blptls;
 using namespace spotykach;
 
 Core::Core() {

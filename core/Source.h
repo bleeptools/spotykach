@@ -2,6 +2,9 @@
 
 #include "i.source.h"
 
+namespace blptls {
+namespace spotykach {
+
 class Source: public ISource {
 public:
     Source();
@@ -35,3 +38,6 @@ private:
     uint32_t _readHead;
     uint32_t _sycleStart;
 };
+
+}
+}

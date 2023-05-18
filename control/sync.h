@@ -5,6 +5,9 @@
 #include "../core/globals.h"
 #include "../core/core.h"
 
+namespace blptls {
+namespace spotykach {
+
 const uint32_t kSamplesPerTickKof = kSampleRate * kSecondsPerMinute / kTicksPerBeat;
 
 struct Beat {
@@ -26,14 +29,14 @@ public:
     Sync() = default;
     ~Sync() = default;   
 
-    void run(vlly::spotykach::Core& core);
+    void run(Core& core);
     void advance(uint32_t by_samples);
     void pull(daisy::DaisySeed& hw);
     float tempo();
     void set_tempo(float normValue);
 
 private:
-    vlly::spotykach::Core* _core;
+    Core* _core;
 
     bool _filled = false;
     uint32_t _ptime = 0;
@@ -61,3 +64,6 @@ private:
     void checkDeviation(uint32_t delta);
     void reset();
 };
+
+}
+}

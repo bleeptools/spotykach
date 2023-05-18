@@ -4,6 +4,9 @@
 #include <cstring>
 #include "buffers.h"
 
+using namespace blptls;
+using namespace spotykach;
+
 Source::Source() :
     _bufferLength { kSourceBufferLength },
     _frozen { false },
