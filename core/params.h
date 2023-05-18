@@ -22,16 +22,16 @@ namespace spotykach {
         c_word
     };
 
-    using Step24ppgn = int;
-    static constexpr std::array<Step24ppgn, 8> EvenSteps {{
-        16, //1
-        12, //1 / 2.
-        8,  //1 / 2
-        6,  //1 / 4.
-        4,  //1 / 4
-        3,  //1 / 8.
-        2,  //1 / 8
-        1,  //1 / 16
+    using Step96ppgn = int;
+    static constexpr std::array<Step96ppgn, 8> EvenSteps {{
+        384, //1
+        288, //1 / 2.
+        192,  //1 / 2
+        144,  //1 / 4.
+        96,  //1 / 4
+        72,  //1 / 8.
+        48,  //1 / 8
+        24,  //1 / 16
     }};
 
     using CWordOnsets = int;

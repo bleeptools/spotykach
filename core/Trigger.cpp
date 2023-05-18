@@ -48,7 +48,7 @@ uint32_t Trigger::set_pattern_index(uint32_t index) {
 
     switch (_grid) {
         case Grid::even: step = EvenSteps[index]; break;
-        case Grid::c_word: onsets = CWords[index]; step = 1; /*1/16*/ break;
+        case Grid::c_word: onsets = CWords[index]; step = kTicksPerBeat / 4; /*1/16*/ break;
     }
 
     if (step != _step || onsets != _onsets) {
@@ -61,11 +61,10 @@ uint32_t Trigger::set_pattern_index(uint32_t index) {
 }
 
 void Trigger::set_grid(float normVal) {
-    Grid grid = spotykach::Grid(normVal * (kGrid_Count - 1));
+    Grid grid = Grid(normVal * (kGrid_Count - 1));
     if (grid != _grid) {
         _grid = grid;
         set_pattern_index(_pattern_indexes[uint32_t(_grid)]);
-        prepare_pattern();
     }
 }
 
