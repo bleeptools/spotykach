@@ -48,7 +48,7 @@ uint32_t Trigger::set_pattern_index(uint32_t index) {
 
     switch (_grid) {
         case Grid::even: step = EvenSteps[index]; break;
-        case Grid::c_word: onsets = CWords[index]; step = kTicksPerBeat / 4; /*1/16*/ break;
+        case Grid::c_word: onsets = CWords[index]; step = kPPQN / 4; /*1/16*/ break;
     }
 
     if (step != _step || onsets != _onsets) {
@@ -125,8 +125,8 @@ void Trigger::prepare_cword_pattern(uint32_t onsets, uint32_t shift) {
 
     _beats_per_pattern = kBeatsPerMeasure;
 
-    auto ticks_per_16th = kTicksPerBeat / 4;
-    auto ticks_per_pattern = _beats_per_pattern * kTicksPerBeat;
+    auto ticks_per_16th = kPPQN / 4;
+    auto ticks_per_pattern = _beats_per_pattern * kPPQN;
     for (uint32_t i = 0; i < pattern.size(); i++) {
         if (!pattern[i]) continue;
         auto point = i * ticks_per_16th + shift;
@@ -144,13 +144,13 @@ void Trigger::prepare_meter_pattern(uint32_t step, uint32_t shift) {
     _points_count = 0;
     _trigger_points.fill(0);
     uint32_t pattern_length { 0 };
-    while (pattern_length % kTicksPerBeat || pattern_length < kTicksPerBeat * kBeatsPerMeasure) {
+    while (pattern_length % kPPQN || pattern_length < kPPQN * kBeatsPerMeasure) {
         _trigger_points[_points_count] = pattern_length;
         _points_count ++;
         pattern_length += step;
     }
-    _beats_per_pattern = pattern_length / kTicksPerBeat;
-    uint32_t ticks_per_pattern = _beats_per_pattern * kTicksPerBeat;
+    _beats_per_pattern = pattern_length / kPPQN;
+    uint32_t ticks_per_pattern = _beats_per_pattern * kPPQN;
     for (uint32_t i = 0; i < _points_count; i++) {
         auto point = _trigger_points[i] + shift;
         if (point >= ticks_per_pattern) {
@@ -187,7 +187,7 @@ void Trigger::next(const bool engaged) {
                 _repeats_to_retrigger ++;
                 _retrigger_distance += _trigger_points[_next_point_index];
                 if (_repeats_to_retrigger % _retrigger == 0) {
-                    _onset += static_cast<float>(_retrigger_distance) / kTicksPerBeat;
+                    _onset += static_cast<float>(_retrigger_distance) / kPPQN;
                     if (_onset >= 2048.f) _onset = 0;
                     _retrigger_distance = 0;
                     _repeats_to_retrigger = 0;
@@ -198,7 +198,7 @@ void Trigger::next(const bool engaged) {
         }
         _next_point_index = (_next_point_index + 1) % _points_count;
     }
-    _iterator = (_iterator + 1) % (_beats_per_pattern * kTicksPerBeat);
+    _iterator = (_iterator + 1) % (_beats_per_pattern * kPPQN);
 }
 
 void Trigger::reset() {

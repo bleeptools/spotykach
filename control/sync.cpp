@@ -1,12 +1,10 @@
 #include "sync.h"
 #include "layout.h"
 #include "../common/fcomp.h"
+#include "../core/globals.h"
 
 using namespace blptls;
 using namespace spotykach;
-
-const float kTempoMin = 30;
-const float kTempoMax = 250;
 
 void Sync::run(Core& core) {
     _core = &core;
@@ -65,7 +63,7 @@ void Sync::clock_in_tick() {
     _ptime = t;
 
     // _beat.ticks++;
-    // if (_beat.ticks == kTicksPerBeat) {
+    // if (_beat.ticks == kPPQN) {
     //     _beat.ticks = 0;
     //     _beat.beats ++;
     // }

@@ -114,7 +114,7 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 
     if (_invalidate_crossfade) {
-        auto framesPerStep { static_cast<uint32_t>(static_cast<float>(_step) * framesPerMeasure / (kTicksPerBeat * kBeatsPerMeasure)) };
+        auto framesPerStep { static_cast<uint32_t>(static_cast<float>(_step) * framesPerMeasure / (kPPQN * kBeatsPerMeasure)) };
         auto framesPerSlice { _generator.frames_per_slice() };
         _envelope.setFramesPerCrossfade(std::max(framesPerSlice - framesPerStep, uint32_t(0)));
         _invalidate_crossfade = false;

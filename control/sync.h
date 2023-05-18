@@ -8,14 +8,14 @@
 namespace blptls {
 namespace spotykach {
 
-const uint32_t kSamplesPerTickKof = kSampleRate * kSecondsPerMinute / kTicksPerBeat;
+const uint32_t kSamplesPerTickKof = kSampleRate * kSecondsPerMinute / kPPQN;
 
 struct Beat {
     uint32_t beats = 0;
     uint32_t ticks = 0;
 
     float value() {
-        return beats + static_cast<float>(ticks) / kTicksPerBeat;
+        return beats + static_cast<float>(ticks) / kPPQN;
     }
 
     void reset() {

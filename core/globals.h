@@ -13,6 +13,7 @@ namespace spotykach {
 
     static const uint32_t kChannelsCount    { 2 };
     static const uint32_t kSampleRate       { 48000 };
+    static const uint32_t kBufferSize       { 4 };
 
     static const float kSecondsPerMinute    { 60.0 };
 
@@ -33,18 +34,18 @@ namespace spotykach {
     };
 
     static const uint32_t kBeatsPerMeasure  { 4 };
-    static const uint32_t kTicksPerBeat     { 96 };
+    static const uint32_t kPPQN             { 48 };
 
     using Step96ppgn = int;
     static constexpr std::array<Step96ppgn, 8> EvenSteps {{
-        384, //1
-        288, //1 / 2.
-        192,  //1 / 2
-        144,  //1 / 4.
-        96,  //1 / 4
-        72,  //1 / 8.
-        48,  //1 / 8
-        24,  //1 / 16
+        4 * kPPQN,      //1
+        3 * kPPQN,      //1 / 2.
+        2 * kPPQN,      //1 / 2
+        3 * kPPQN / 2,  //1 / 4.
+        1 * kPPQN,      //1 / 4
+        3 * kPPQN,      //1 / 8.
+        1 * kPPQN / 2,  //1 / 8
+        1 * kPPQN / 4,  //1 / 16
     }};
 
     using CWordOnsets = int;
@@ -62,5 +63,12 @@ namespace spotykach {
 
     static constexpr int EvenStepsCount = EvenSteps.size();
     static constexpr int CWordsCount = CWords.size();
+
+    inline const float max_tempo() {
+        return std::min(static_cast<float>(kSampleRate) / (kPPQN * kBufferSize), 200.f);
+    };
+
+    static const float kTempoMin = 30;
+    static const float kTempoMax = max_tempo();
 }
 }

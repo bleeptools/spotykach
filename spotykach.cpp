@@ -7,7 +7,6 @@
 #include "common/deb.h"
 
 using namespace daisy;
-
 using namespace blptls;
 using namespace spotykach;
 
@@ -17,9 +16,6 @@ Core core;
 PlaybackParameters p;
 Sync snc;
 Leds leds;
-
-const float tempo { 120 };
-const int bufferSize { 4 };
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
 	static int cnfg_cnt { 0 };
@@ -48,7 +44,7 @@ int main(void) {
 	core.engineAt(0).set_on_slice([](uint32_t sl, bool rev){ leds.blink_a(sl, rev); });
 	core.engineAt(1).set_on_slice([](uint32_t sl, bool rev){ leds.blink_b(sl, rev); });
 
-	hw.SetAudioBlockSize(bufferSize);
+	hw.SetAudioBlockSize(kBufferSize);
 	hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hw.StartAudio(AudioCallback);
 
