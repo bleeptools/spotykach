@@ -88,7 +88,7 @@ void Controller::set_parameters(Core& core, Leds& leds, Sync& snc) {
     for (int i = 0; i < core.enginesCount(); i++) set_channel_toggles(core.engineAt(i), _channel_toggles[i], i);
     set_global_toggles(core);
 
-    read_sensor(core, leds);
+    read_sensor(core, leds, snc);
 
     set_knob_parameters(core, snc);
 };
@@ -156,7 +156,7 @@ void Controller::set_global_toggles(Core& s) {
     }
 }
 
-void Controller::read_sensor(Core& core, Leds& leds) {
+void Controller::read_sensor(Core& core, Leds& leds, Sync& snc) {
     _sensor.process();
 
     auto& e_a = core.engineAt(0);
@@ -181,6 +181,7 @@ void Controller::read_sensor(Core& core, Leds& leds) {
     auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
     _is_playing_toggled = is_playing_toggled;
 
+    snc.set_is_playing(is_playing_toggled);
     e_a.set_is_playing(is_playing_toggled, reset);
     e_b.set_is_playing(is_playing_toggled, reset);
 

@@ -38,7 +38,7 @@ private:
     void set_knob_parameters(Core &s, Sync& snc);
     void set_channel_toggles(Engine& e, ChannelToggles& ct, int i);
     void set_global_toggles(Core& s);
-    void read_sensor(Core& core, Leds& leds);
+    void read_sensor(Core& core, Leds& leds, Sync& sync);
 
     void store_pattern_index_a(int index, Grid g);
     void store_pattern_index_b(int index, Grid g);

@@ -8,8 +8,6 @@
 namespace blptls {
 namespace spotykach {
 
-const uint32_t kSamplesPerTickKof = kSampleRate * kSecondsPerMinute / kPPQN;
-
 struct Beat {
     uint32_t beats = 0;
     uint32_t ticks = 0;
@@ -30,12 +28,17 @@ public:
     ~Sync() = default;   
 
     void run(Core& core);
-    void advance(uint32_t by_samples);
+    void advance();
     void pull(daisy::DaisySeed& hw);
     float tempo();
     void set_tempo(float normValue);
+    void set_is_playing(bool is_playing);
 
 private:
+    inline uint32_t tempo_mks(const float tempo) {
+        return static_cast<uint32_t>(kSecondsPerMinute * 1e6 / tempo);
+    }
+
     Core* _core;
 
     bool _filled = false;
@@ -46,8 +49,14 @@ private:
     uint8_t _dev_cnt_thres = 3; //deviations until reset
     uint32_t _dev_thres = 3; //min deviation to consider
 
-    uint32_t _sample_count = 0;
-    uint32_t _samples_per_tick = kSamplesPerTickKof / _tempo;
+    bool _is_playing = false;
+
+    const uint32_t kInterval = 1e6 * kBufferSize / kSampleRate;
+    const uint32_t kTRtime = kPPQN * kInterval;
+    uint32_t _tempo_mks = tempo_mks(_tempo);
+    uint32_t _fticks = 0;
+    uint32_t _nticks = 0;
+    uint32_t _elapsed_ticks = 0;
 
     float _avg = 125;
     float _tempo = 120;

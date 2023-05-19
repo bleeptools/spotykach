@@ -17,12 +17,25 @@ void Sync::run(Core& core) {
 	g.Init(cfg);
 }
 
-void Sync::advance(uint32_t by_samples) {
-    _sample_count += by_samples;
-    if (_sample_count >= _samples_per_tick) {
-        _sample_count %= _samples_per_tick;
+void Sync::advance() {
+    if (!_is_playing) return;
+    
+    _nticks = (_fticks + kTRtime) / _tempo_mks;
+    _fticks += kTRtime - _nticks * _tempo_mks;
+    auto et = _elapsed_ticks + _nticks;
+    if (et > _elapsed_ticks) {
+        _elapsed_ticks = et;
         _core->pulse();
     }
+}
+
+void Sync::set_is_playing(bool is_playing) {
+    if (is_playing != _is_playing) {
+        _nticks = 0;
+        _fticks = 0;
+        _elapsed_ticks = 0;
+    }
+    _is_playing = is_playing;
 }
 
 void Sync::pull(daisy::DaisySeed& hw) {
@@ -41,7 +54,7 @@ void Sync::set_tempo(float norm_value) {
     if (fcomp(norm_value, _raw_tempo)) return;
     _raw_tempo = norm_value;
     _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
-    _samples_per_tick = static_cast<uint32_t>(round(static_cast<float>(kSamplesPerTickKof) / _tempo));
+    _tempo_mks = tempo_mks(_tempo);
 }
 
 void Sync::reset() {
@@ -58,6 +71,7 @@ void Sync::clock_in_tick() {
     if (_ptime > 0) {
         push(delta);
         _tempo = std::min(tempo(avg()), kTempoMax);
+        _tempo_mks = tempo_mks(_tempo);
         checkDeviation(delta);
     }
     _ptime = t;

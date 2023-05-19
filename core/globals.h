@@ -34,7 +34,7 @@ namespace spotykach {
     };
 
     static const uint32_t kBeatsPerMeasure  { 4 };
-    static const uint32_t kPPQN             { 48 };
+    static const uint32_t kPPQN             { 240 };
 
     using Step96ppgn = int;
     static constexpr std::array<Step96ppgn, 8> EvenSteps {{
@@ -64,11 +64,7 @@ namespace spotykach {
     static constexpr int EvenStepsCount = EvenSteps.size();
     static constexpr int CWordsCount = CWords.size();
 
-    inline const float max_tempo() {
-        return std::min(static_cast<float>(kSampleRate) / (kPPQN * kBufferSize), 200.f);
-    };
-
     static const float kTempoMin = 30;
-    static const float kTempoMax = max_tempo();
+    static const float kTempoMax = 250;
 }
 }
