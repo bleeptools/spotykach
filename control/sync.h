@@ -28,7 +28,7 @@ public:
     ~Sync() = default;   
 
     void run(Core& core);
-    void advance();
+    void tick();
     void pull(daisy::DaisySeed& hw);
     
     float tempo() { return 60000000.f / _tempo_mks; }
@@ -38,7 +38,7 @@ public:
 
 private:
     void clock_in_tick();
-    void sync();
+    void sync(bool re);
     void reset();
     uint32_t tempo_mks(const float tempo) {
         return static_cast<uint32_t>(kSecondsPerMinute * 1e6 / tempo);
@@ -58,9 +58,7 @@ private:
     uint32_t _fticks = 0;
     uint32_t _ticks_at_last_clock = 0;
     uint32_t _tempo_ticks = 0;
-
     bool _hold = false;
-    bool _resync = false;
 
     Beat _beat;
     float _tempo = 120;

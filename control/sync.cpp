@@ -17,28 +17,27 @@ void Sync::run(Core& core) {
 	g.Init(cfg);
 }
 
-void Sync::advance() {
+void Sync::tick() {
     if (!_is_playing) return;
-    sync();
+    sync(false);
 }
 
-void Sync::sync() {
+void Sync::sync(bool resync) {
     uint32_t nticks;
 
-    if (_hold) {
-        nticks = (_fticks + kTRtime) / _tempo_mks;
-        _fticks += kTRtime - (nticks * _tempo_mks);
-        _tempo_ticks += nticks;
-        return;
-    }
-
-    if (_resync) {
+    if (resync) {
         _fticks = 0;
         nticks = kTicksPerClock - (_ticks - _ticks_at_last_clock);
         _ticks_at_last_clock = _ticks + nticks;
         _tempo_mks -= (kTicksPerClock - _tempo_ticks) * _tempo_mks / kPPQN;
         _tempo_ticks = 0;
-        _resync = false;
+        _hold = false;
+    }
+    else if (_hold) {
+        nticks = (_fticks + kTRtime) / _tempo_mks;
+        _fticks += kTRtime - (nticks * _tempo_mks);
+        _tempo_ticks += nticks;
+        return;
     }
     else {
         nticks = (_fticks + kTRtime) / _tempo_mks;
@@ -82,9 +81,7 @@ void Sync::pull(daisy::DaisySeed& hw) {
 
 void Sync::clock_in_tick() {
     if (!_is_playing) return;
-    _resync = true;
-    _hold = false;
-    sync();
+    sync(true);
 }
 
 void Sync::reset() {
@@ -92,6 +89,5 @@ void Sync::reset() {
     _ticks = 0;
     _ticks_at_last_clock = 0;
     _tempo_ticks = 0;
-    _resync = false;
     _hold = false;
 }

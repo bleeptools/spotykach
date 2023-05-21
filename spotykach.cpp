@@ -24,7 +24,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 		p.sampleRate = kSampleRate;
 		cnfg_cnt = 0;
 	}
-	snc.advance();
+	snc.tick();
 	core.preprocess(p);
 	core.process(in, out, size);
 }
