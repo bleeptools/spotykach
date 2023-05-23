@@ -22,6 +22,9 @@ void Sync::tick() {
     sync();
 }
 
+/*
+Derived from Maximum MIDI Music Applications in C++ by Paul Messick
+*/
 void Sync::sync() {
     uint32_t nticks = 0;
 
@@ -69,10 +72,10 @@ void Sync::set_is_playing(bool is_playing) {
 }
 
 void Sync::set_tempo(float norm_value) {
-    // if (fcomp(norm_value, _raw_tempo)) return;
-    // _raw_tempo = norm_value;
-    // _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
-    // _tempo_mks = tempo_mks(_tempo);
+    if (fcomp(norm_value, _raw_tempo)) return;
+    _raw_tempo = norm_value;
+    _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
+    _tempo_mks = tempo_mks(_tempo);
 }
 
 void Sync::pull(daisy::DaisySeed& hw) {
