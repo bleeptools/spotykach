@@ -36,10 +36,7 @@ void Sync::sync() {
         _fticks = 0;
         nticks = kTicksPerClock - (_ticks - _ticks_at_last_clock);
         _ticks_at_last_clock = _ticks + nticks;
-        auto before = _tempo_mks;
-        _delta = ((int32_t)kTicksPerClock - (int32_t)_tempo_ticks) * (int32_t)_tempo_mks / (int32_t)kPPQN;
-        _tempo_mks -= _delta;
-        auto after = _tempo_mks;
+        _tempo_mks -= ((int32_t)kTicksPerClock - (int32_t)_tempo_ticks) * (int32_t)_tempo_mks / (int32_t)kPPQN;
         _tempo_ticks = 0;
         _resync = false;
     }
