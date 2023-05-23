@@ -96,7 +96,7 @@ void Controller::set_parameters(Core& core, Leds& leds, Sync& snc) {
 using namespace blptls;
 using namespace spotykach;
 using KT = Knob::Target;
-void Controller::set_knob_parameters(Core &s, Sync &snc) {
+void Controller::set_knob_parameters(Core& s, Sync& snc) {
     auto& a = s.engineAt(0);
     auto& b = s.engineAt(1);
     for (size_t i = 0; i < _knobs.size(); i++) {
