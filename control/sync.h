@@ -38,7 +38,7 @@ public:
 
 private:
     void clock_in_tick();
-    void sync(bool re);
+    void sync();
     void reset();
     uint32_t tempo_mks(const float tempo) {
         return static_cast<uint32_t>(kSecondsPerMinute * 1e6 / tempo);
@@ -48,17 +48,19 @@ private:
     daisy::GPIO g;
 
     bool _is_playing = false;
+    bool _is_about_to_play = false;
 
     const uint32_t kInterval = 1e6 * kBufferSize / kSampleRate;
     const uint32_t kTRtime = kPPQN * kInterval;
     const uint32_t kTicksPerClock = kPPQN / 4;
-    uint32_t _tempo_mks = tempo_mks(_tempo);
+    uint32_t _tempo_mks = 500000;
     uint32_t _tempo_delta_mks = 0;
     uint32_t _ticks = 0;
     uint32_t _fticks = 0;
     uint32_t _ticks_at_last_clock = 0;
     uint32_t _tempo_ticks = 0;
     bool _hold = false;
+    bool _resync = false;
 
     Beat _beat;
     float _tempo = 120;

@@ -19,29 +19,33 @@ void Sync::run(Core& core) {
 
 void Sync::tick() {
     if (!_is_playing) return;
-    sync(false);
+    sync();
 }
 
-void Sync::sync(bool resync) {
-    uint32_t nticks;
+void Sync::sync() {
+    uint32_t nticks = 0;
 
-    if (resync) {
-        _fticks = 0;
-        nticks = kTicksPerClock - (_ticks - _ticks_at_last_clock);
-        _ticks_at_last_clock = _ticks + nticks;
-        _tempo_mks -= (kTicksPerClock - _tempo_ticks) * _tempo_mks / kPPQN;
-        _tempo_ticks = 0;
-        _hold = false;
-    }
-    else if (_hold) {
+    if (_hold) {
         nticks = (_fticks + kTRtime) / _tempo_mks;
         _fticks += kTRtime - (nticks * _tempo_mks);
         _tempo_ticks += nticks;
         return;
     }
+
+    if (_resync) {
+        _fticks = 0;
+        nticks = kTicksPerClock - (_ticks - _ticks_at_last_clock);
+        _ticks_at_last_clock = _ticks + nticks;
+        auto before = _tempo_mks;
+        _delta = ((int32_t)kTicksPerClock - (int32_t)_tempo_ticks) * (int32_t)_tempo_mks / (int32_t)kPPQN;
+        _tempo_mks -= _delta;
+        auto after = _tempo_mks;
+        _tempo_ticks = 0;
+        _resync = false;
+    }
     else {
         nticks = (_fticks + kTRtime) / _tempo_mks;
-        _fticks += kTRtime - (nticks * _tempo_mks);
+        _fticks += kTRtime - nticks * _tempo_mks;
         _tempo_ticks += nticks;
         if (_ticks - _ticks_at_last_clock + nticks >= kTicksPerClock) {
             nticks = kTicksPerClock - 1 - (_ticks - _ticks_at_last_clock);
@@ -49,26 +53,29 @@ void Sync::sync(bool resync) {
         }
     }
 
-    if (nticks > 0) {
-        _ticks += nticks;
-        for (uint32_t i = 0; i < nticks; i++) {
-            _core->pulse();
-        }
+    _ticks += nticks;
+    for (uint32_t i = 0; i < nticks; i++) {
+        _core->pulse();
     }
 }
 
 void Sync::set_is_playing(bool is_playing) {
-    if (is_playing != _is_playing) {
-        reset();    
+    if (is_playing == _is_playing) return;
+     
+    if (is_playing) {
+        _is_about_to_play = true;
     }
-    _is_playing = is_playing;
+    else {
+        _is_playing = false;
+        reset();
+    }
 }
 
 void Sync::set_tempo(float norm_value) {
-    if (fcomp(norm_value, _raw_tempo)) return;
-    _raw_tempo = norm_value;
-    _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
-    _tempo_mks = tempo_mks(_tempo);
+    // if (fcomp(norm_value, _raw_tempo)) return;
+    // _raw_tempo = norm_value;
+    // _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
+    // _tempo_mks = tempo_mks(_tempo);
 }
 
 void Sync::pull(daisy::DaisySeed& hw) {
@@ -80,8 +87,17 @@ void Sync::pull(daisy::DaisySeed& hw) {
 }
 
 void Sync::clock_in_tick() {
-    if (!_is_playing) return;
-    sync(true);
+    if (!_is_playing && !_is_about_to_play) return;
+
+    if (_is_about_to_play) {
+        _is_about_to_play = false;
+        _is_playing = true;
+    }
+    else {
+        _resync = true;
+        _hold = false;
+        sync();
+    }
 }
 
 void Sync::reset() {
