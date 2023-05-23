@@ -36,16 +36,17 @@ namespace spotykach {
     static const uint32_t kBeatsPerMeasure  { 4 };
     static const uint32_t kPPQN             { 240 };
 
-    using Step96ppgn = int;
-    static constexpr std::array<Step96ppgn, 8> EvenSteps {{
+    using Step = int;
+    static constexpr std::array<Step, 9> EvenSteps {{
         4 * kPPQN,      //1
         3 * kPPQN,      //1 / 2.
         2 * kPPQN,      //1 / 2
         3 * kPPQN / 2,  //1 / 4.
         1 * kPPQN,      //1 / 4
-        3 * kPPQN,      //1 / 8.
         1 * kPPQN / 2,  //1 / 8
+        1 * kPPQN / 3,  //1 / 8T
         1 * kPPQN / 4,  //1 / 16
+        1 * kPPQN / 8,  //1 / 32
     }};
 
     using CWordOnsets = int;
