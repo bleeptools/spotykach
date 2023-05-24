@@ -60,24 +60,27 @@ void Sync::sync() {
         _tempo_ticks = 0;
         _resync = false;
     }
-    //Regular mode. We generate internal ticks between external ticks.
+    //Regular mode. We generate internal ticks.
     else {
         nticks = (_fticks + kTRtime) / _tempo_mks;
         _fticks += kTRtime - nticks * _tempo_mks;
-        _tempo_ticks += nticks;
-        //If there are more internal ticks per the external tick than 
-        //expected, we set _hold to true effectively stopping advancing timeline
-        //until next external tick
-        if (_ticks - _ticks_at_last_clock + nticks >= kTicksPerClock) {
-            nticks = kTicksPerClock - 1 - (_ticks - _ticks_at_last_clock);
-            _hold = true;
+        if (_is_synced_to_external_clock) {
+            _tempo_ticks += nticks;
+            //If there are more internal ticks per the external tick than 
+            //expected, we set _hold to true effectively stopping advancing timeline
+            //until next external tick
+            if (_ticks - _ticks_at_last_clock + nticks >= kTicksPerClock) {
+                nticks = kTicksPerClock - 1 - (_ticks - _ticks_at_last_clock);
+                _hold = true;
+            }
         }
     }
 
+    //Accumulate ticks
     _ticks += nticks;
-    for (uint32_t i = 0; i < nticks; i++) {
-        _core->pulse();
-    }
+
+    //Advance timeline
+    for (uint32_t i = 0; i < nticks; i++) _core->pulse();
 }
 
 /*
@@ -90,7 +93,8 @@ void Sync::set_is_playing(bool is_playing) {
     if (is_playing == _is_playing) return;
      
     if (is_playing) {
-        _is_about_to_play = true;
+        if (_is_synced_to_external_clock) _is_about_to_play = true;
+        else _is_playing = true;
     }
     else {
         _is_playing = false;
@@ -103,10 +107,14 @@ Setting tempo from internal control.
 Has no effect in case of syncing to extrnal clock.
 */
 void Sync::set_tempo(float norm_value) {
-    if (fcomp(norm_value, _raw_tempo)) return;
+    if (_is_synced_to_external_clock || fcomp(norm_value, _raw_tempo)) return;
     _raw_tempo = norm_value;
     _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
     _tempo_mks = tempo_mks(_tempo);
+}
+
+void Sync::set_is_synced_to_external_clock(bool value) {
+    _is_synced_to_external_clock = value;   
 }
 
 /*
@@ -115,7 +123,7 @@ Read external clock pin
 void Sync::pull(daisy::DaisySeed& hw) {
     auto new_state = g.Read();
     if (_last_state && !new_state) {
-        clock_in_tick();
+        external_clock_tick();
     }
     _last_state = new_state;
 }
@@ -126,7 +134,7 @@ This method starts playback on first received clock
 after playback was scheduled. After that, calls sync 
 for every tick received.
 */
-void Sync::clock_in_tick() {
+void Sync::external_clock_tick() {
     if (!_is_playing && !_is_about_to_play) return;
 
     if (_is_about_to_play) {
@@ -146,4 +154,5 @@ void Sync::reset() {
     _ticks_at_last_clock = 0;
     _tempo_ticks = 0;
     _hold = false;
+    _resync = false;
 }

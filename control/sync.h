@@ -35,9 +35,10 @@ public:
     void set_tempo(float normValue);
 
     void set_is_playing(bool is_playing);
+    void set_is_synced_to_external_clock(bool value);
 
 private:
-    void clock_in_tick();
+    void external_clock_tick();
     void sync();
     void reset();
     uint32_t tempo_mks(const float tempo) {
@@ -49,6 +50,7 @@ private:
 
     bool _is_playing = false;
     bool _is_about_to_play = false;
+    bool _is_synced_to_external_clock = false;
 
     const uint32_t kInterval = 1e6 * kBufferSize / kSampleRate;
     const uint32_t kTRtime = kPPQN * kInterval;
