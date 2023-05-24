@@ -34,7 +34,7 @@ namespace spotykach {
     };
 
     static const uint32_t kBeatsPerMeasure  { 4 };
-    static const uint32_t kPPQN             { 240 };
+    static const uint32_t kPPQN             { 96 };
 
     using Step = int;
     static constexpr std::array<Step, 11> EvenSteps {{
