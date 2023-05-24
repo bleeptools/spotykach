@@ -1,12 +1,11 @@
 #pragma once
 
-#include "engine.h"
-#include "globals.h"
-#include "globals.h"
 #include <array>
 #include <vector>
 #include <memory>
-
+#include "engine.h"
+#include "globals.h"
+#include "../control/clockable.h"
 
 namespace blptls {
 namespace spotykach {
@@ -18,7 +17,7 @@ struct PlaybackControls {
     bool rev_b;
 };
 
-class Core {
+class Core: public Clockable {
 public:
     Core();
     ~Core() = default;
@@ -26,7 +25,7 @@ public:
     Engine& engineAt(int index) const;
     long enginesCount() const;
 
-    void pulse();
+    void tick();
 
     void setMutex(bool mutex);
     

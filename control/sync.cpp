@@ -6,8 +6,8 @@
 using namespace blptls;
 using namespace spotykach;
 
-void Sync::run(Core& core) {
-    _core = &core;
+void Sync::run(Clockable& clockable) {
+    _clockable = &clockable;
     daisy::GPIO::Config cfg;
 #ifdef ROEY_LAYOUT
 	cfg.pin = daisy::seed::D0;
@@ -80,7 +80,7 @@ void Sync::sync() {
     _ticks += nticks;
 
     //Advance timeline
-    for (uint32_t i = 0; i < nticks; i++) _core->pulse();
+    for (uint32_t i = 0; i < nticks; i++) _clockable->tick();
 }
 
 /*

@@ -155,7 +155,7 @@ void Core::initialize() const {
     for (auto e: _engines) e->initialize();
 }
 
-void Core::pulse() {
+void Core::tick() {
     auto& e1 = engineAt(0);
     e1.step(true);
     
