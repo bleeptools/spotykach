@@ -122,7 +122,7 @@ Read external clock pin
 */
 void Sync::pull(daisy::DaisySeed& hw) {
     auto new_state = g.Read();
-    if (_last_state && !new_state) {
+    if (new_state && !_last_state) {
         external_clock_tick();
     }
     _last_state = new_state;
