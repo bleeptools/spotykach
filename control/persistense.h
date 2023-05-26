@@ -50,18 +50,12 @@ public:
 
 private:
     void store() {
-        _params.tag = 3;
-        size_t size = sizeof(_params);
-	    size_t address = (size_t)(&params_qspi);
+        // _params.tag = 3;
+        // size_t size = sizeof(_params);
+	    // size_t address = (size_t)(&params_qspi);
 	    
-	    _hw->qspi.Erase(address, address + size);
-	    _hw->qspi.Write(address, size, (uint8_t*)(&_params));    
-    }
-
-    void clear() {
-        size_t size = sizeof(_params);
-	    size_t address = (size_t)(&params_qspi);
-	    _hw->qspi.Erase(address, address + size);
+	    // _hw->qspi.Erase(address, address + size);
+	    // _hw->qspi.Write(address, size, (uint8_t*)(&_params));    
     }
 
     daisy::DaisySeed* _hw;
