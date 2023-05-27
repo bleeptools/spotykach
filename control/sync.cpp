@@ -20,7 +20,7 @@ void Sync::run(Clockable& clockable) {
 // Called by internal interrupt timer (audio callback in this implementation).
 void Sync::tick() {
     if (!_is_playing) return;
-    sync();
+    emit_ticks();
 }
 
 /*
@@ -35,7 +35,7 @@ _resync - flag to resync to external clock. Is set to true once external clock t
 _hold - flag to stop advancing internal timeline if the number of internal ticks exceeded expected count of internal ticks per extrnal tick
 kTRTime - internal resolution (ppqn) multiplied by interrupt interval.
 */
-void Sync::sync() {
+void Sync::emit_ticks() {
     uint32_t nticks = 0;
 
     //If we generated more internal ticks per extrnal tick as expected,
@@ -64,7 +64,7 @@ void Sync::sync() {
     else {
         nticks = (_fticks + kTRtime) / _tempo_mks;
         _fticks += kTRtime - nticks * _tempo_mks;
-        if (_tempo < kTempoMin) {
+        if (external_clock()) {
             _tempo_ticks += nticks;
             //If there are more internal ticks per the external tick than 
             //expected, we set _hold to true effectively stopping advancing timeline
@@ -80,9 +80,7 @@ void Sync::sync() {
     _ticks += nticks;
 
     //Advance timeline
-    if (_callback != nullptr) {
-        for (uint32_t i = 0; i < nticks; i++) _callback();
-    }
+    for (uint32_t i = 0; i < nticks; i++) _clockable->tick();
 }
 
 /*
@@ -95,7 +93,7 @@ void Sync::set_is_playing(bool is_playing) {
     if (is_playing == _is_playing) return;
      
     if (is_playing) {
-        if (_tempo < kTempoMin) _is_about_to_play = true;
+        if (external_clock()) _is_about_to_play = true;
         else _is_playing = true;
     }
     else {
@@ -109,11 +107,18 @@ Setting tempo from internal control.
 Has no effect in case of syncing to extrnal clock.
 */
 void Sync::set_tempo(float norm_value) {
-    if (fcomp(norm_value, _raw_tempo)) return;
-    _raw_tempo = norm_value;
-    const auto clock_off_offset = 5;
-    _tempo = (kTempoMax - kTempoMin - clock_off_offset) * norm_value + kTempoMin + clock_off_offset;
-    _tempo_mks = tempo_mks(_tempo);
+    if (fcomp(norm_value, _raw_manual_tempo)) return;
+    _raw_manual_tempo = norm_value;
+    const auto clock_off_offset = 10;
+    _manual_tempo = (kTempoMax - kTempoMin - clock_off_offset) * norm_value + kTempoMin - clock_off_offset;
+    _tempo_mks = tempo_mks(_manual_tempo);
+    if (external_clock()) {
+        if (_is_playing) {
+            _is_playing = false;
+            _is_about_to_play = true;
+        }
+        reset();
+    }
 }
 
 /*
@@ -134,7 +139,7 @@ after playback was scheduled. After that, calls sync
 for every tick received.
 */
 void Sync::external_clock_tick() {
-    if (_tempo >= kTempoMin) return;
+    if (!external_clock()) return;
     if (!_is_playing && !_is_about_to_play) return;
 
     if (_is_about_to_play) {
@@ -144,7 +149,7 @@ void Sync::external_clock_tick() {
     else {
         _resync = true;
         _hold = false;
-        sync();
+        emit_ticks();
     }
 }
 

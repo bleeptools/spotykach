@@ -23,8 +23,9 @@ public:
     void set_is_playing(bool is_playing);
 
 private:
+    bool external_clock() { return _manual_tempo < kTempoMin; }
     void external_clock_tick();
-    void sync();
+    void emit_ticks();
     void reset();
     uint32_t tempo_mks(const float tempo) {
         return static_cast<uint32_t>(kSecondsPerMinute * 1e6 / tempo);
@@ -39,7 +40,6 @@ private:
     const uint32_t kInterval = 1e6 * kBufferSize / kSampleRate;
     const uint32_t kTRtime = kPPQN * kInterval;
     const uint32_t kTicksPerClock = kPPQN / 4;
-    uint32_t _tempo_delta_mks = 0;
     uint32_t _ticks = 0;
     uint32_t _fticks = 0;
     uint32_t _ticks_at_last_clock = 0;
@@ -47,8 +47,8 @@ private:
     bool _hold = false;
     bool _resync = false;
 
-    float _tempo = 120;
-    float _raw_tempo = _tempo;
+    float _manual_tempo = 120;
+    float _raw_manual_tempo = _manual_tempo;
     uint32_t _tempo_mks = 500000;
 
     int _last_state = 1;
