@@ -64,7 +64,7 @@ void Sync::sync() {
     else {
         nticks = (_fticks + kTRtime) / _tempo_mks;
         _fticks += kTRtime - nticks * _tempo_mks;
-        if (_is_synced_to_external_clock) {
+        if (_tempo < kTempoMin) {
             _tempo_ticks += nticks;
             //If there are more internal ticks per the external tick than 
             //expected, we set _hold to true effectively stopping advancing timeline
@@ -80,7 +80,9 @@ void Sync::sync() {
     _ticks += nticks;
 
     //Advance timeline
-    for (uint32_t i = 0; i < nticks; i++) _clockable->tick();
+    if (_callback != nullptr) {
+        for (uint32_t i = 0; i < nticks; i++) _callback();
+    }
 }
 
 /*
@@ -93,7 +95,7 @@ void Sync::set_is_playing(bool is_playing) {
     if (is_playing == _is_playing) return;
      
     if (is_playing) {
-        if (_is_synced_to_external_clock) _is_about_to_play = true;
+        if (_tempo < kTempoMin) _is_about_to_play = true;
         else _is_playing = true;
     }
     else {
@@ -107,14 +109,11 @@ Setting tempo from internal control.
 Has no effect in case of syncing to extrnal clock.
 */
 void Sync::set_tempo(float norm_value) {
-    if (_is_synced_to_external_clock || fcomp(norm_value, _raw_tempo)) return;
+    if (fcomp(norm_value, _raw_tempo)) return;
     _raw_tempo = norm_value;
-    _tempo = (kTempoMax - kTempoMin) * norm_value + kTempoMin;
+    const auto clock_off_offset = 5;
+    _tempo = (kTempoMax - kTempoMin - clock_off_offset) * norm_value + kTempoMin + clock_off_offset;
     _tempo_mks = tempo_mks(_tempo);
-}
-
-void Sync::set_is_synced_to_external_clock(bool value) {
-    _is_synced_to_external_clock = value;   
 }
 
 /*
@@ -135,6 +134,7 @@ after playback was scheduled. After that, calls sync
 for every tick received.
 */
 void Sync::external_clock_tick() {
+    if (_tempo >= kTempoMin) return;
     if (!_is_playing && !_is_about_to_play) return;
 
     if (_is_about_to_play) {

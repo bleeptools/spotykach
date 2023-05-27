@@ -5,7 +5,6 @@
 #include <memory>
 #include "engine.h"
 #include "globals.h"
-#include "../control/clockable.h"
 
 namespace blptls {
 namespace spotykach {
@@ -17,7 +16,7 @@ struct PlaybackControls {
     bool rev_b;
 };
 
-class Core: public Clockable {
+class Core {
 public:
     Core();
     ~Core() = default;
