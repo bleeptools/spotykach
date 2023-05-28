@@ -39,7 +39,7 @@ int main(void) {
 
 	core.initialize();
 	clck.run(core);
-	controller.initialize(hw, core);
+	controller.initialize(hw, core, clck);
 
 	leds.initialize();
 	core.engineAt(0).set_on_slice([](uint32_t sl, bool rev){ leds.blink_a(sl, rev); });

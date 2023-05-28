@@ -19,7 +19,7 @@ public:
     Controller() = default;
     ~Controller() = default;
 
-    void initialize(DaisySeed& hw, Core& core, Clock& clock);
+    void initialize(daisy::DaisySeed& hw, Core& core, Clock& clock);
 
     void set_parameters(Core& core, Leds& leds, Clock& clck);
 
