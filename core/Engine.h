@@ -49,8 +49,6 @@ public:
     void set_jitter_rate(float value);
     
     void set_reverse(bool reverse);
-    
-    void step(bool engaged);
 
     void preprocess(PlaybackParameters p);
     

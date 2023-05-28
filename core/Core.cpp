@@ -157,11 +157,11 @@ void Core::initialize() const {
 
 void Core::tick() {
     auto& e1 = engineAt(0);
-    e1.step(true);
+    e1.trig().next(true);
     
     auto& e2 = engineAt(1);
     bool engaged = !(_mutex && e1.trig().is_locking());
-    e2.step(engaged);
+    e2.trig().next(engaged);
 }
 
 void Core::set_playback_controls(PlaybackControls c) {

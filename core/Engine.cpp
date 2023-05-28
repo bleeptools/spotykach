@@ -121,10 +121,6 @@ void Engine::preprocess(PlaybackParameters p) {
     }
 }
 
-void Engine::step(bool engaged) {
-    _trigger.next(engaged);
-}
-
 void Engine::process(float in0, float in1, float* out0, float* out1, bool continual, bool reverse) {
     _jitterLFO.advance();
     _source.write(in0, in1);
