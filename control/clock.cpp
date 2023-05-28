@@ -19,7 +19,7 @@ void Clock::run(Clockable& clockable) {
 
 // Called by internal interrupt timer (audio callback in this implementation).
 void Clock::tick() {
-    if (!_is_playing) return;
+    if (!_is_running) return;
     emit_ticks();
 }
 
@@ -89,15 +89,13 @@ method only schedules playback. Actual playback
 starts on the first tick of the external clock.
 see clock_in_tick() below.
 */
-void Clock::set_is_playing(bool is_playing) {
-    if (is_playing == _is_playing) return;
-     
-    if (is_playing) {
-        if (external_clock()) _is_about_to_play = true;
-        else _is_playing = true;
+void Clock::toggle_is_running() { 
+    if (!_is_running) {
+        if (external_clock()) _is_about_to_run = true;
+        else _is_running = true;
     }
     else {
-        _is_playing = false;
+        _is_running = false;
         reset();
     }
 }
@@ -113,9 +111,13 @@ void Clock::set_tempo(float norm_value) {
     _manual_tempo = (kTempoMax - kTempoMin - clock_off_offset) * norm_value + kTempoMin - clock_off_offset;
     _tempo_mks = tempo_mks(_manual_tempo);
     if (external_clock()) {
-        if (_is_playing) {
-            _is_playing = false;
-            _is_about_to_play = true;
+        if (_is_running) {
+            _is_running = false;
+            _is_about_to_run = true;
+        }
+        else if (_is_about_to_run) {
+            _is_running = true;
+            _is_about_to_run = false;
         }
         reset();
     }
@@ -140,11 +142,11 @@ for every tick received.
 */
 void Clock::external_clock_tick() {
     if (!external_clock()) return;
-    if (!_is_playing && !_is_about_to_play) return;
+    if (!_is_running && !_is_about_to_run) return;
 
-    if (_is_about_to_play) {
-        _is_about_to_play = false;
-        _is_playing = true;
+    if (_is_about_to_run) {
+        _is_about_to_run = false;
+        _is_running = true;
     }
     else {
         _resync = true;

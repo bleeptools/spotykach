@@ -19,7 +19,7 @@ public:
     Controller() = default;
     ~Controller() = default;
 
-    void initialize(daisy::DaisySeed& hw, Core& s);
+    void initialize(DaisySeed& hw, Core& core, Clock& clock);
 
     void set_parameters(Core& core, Leds& leds, Clock& clck);
 
@@ -31,7 +31,7 @@ public:
     bool holding_rev_b() { return _holding_rev_b; };
 
 private:
-    void init_sensor(Core& core);
+    void init_sensor(Core& core, Clock &clock);
     void init_knobs(daisy::DaisySeed& hw);
     void init_toggles(daisy::DaisySeed& hw);
     void set_persisted(Core& core);
@@ -55,7 +55,6 @@ private:
     bool _holding_rev_b = false;
     bool _rec_a = false;
     bool _rec_b = false;
-    bool _is_playing_toggled = false;
 };
 }
 }

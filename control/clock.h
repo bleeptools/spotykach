@@ -20,7 +20,8 @@ public:
     float tempo() { return 60000000.f / _tempo_mks; }
     void set_tempo(float normValue);
 
-    void set_is_playing(bool is_playing);
+    void toggle_is_running();
+    bool is_running() { return _is_running; };
 
 private:
     bool external_clock() { return _manual_tempo < kTempoMin; }
@@ -34,8 +35,8 @@ private:
     Clockable* _clockable;
     daisy::GPIO g;
 
-    bool _is_playing = false;
-    bool _is_about_to_play = false;
+    bool _is_running = false;
+    bool _is_about_to_run = false;
 
     const uint32_t kInterval = 1e6 * kBufferSize / kSampleRate;
     const uint32_t kTRtime = kPPQN * kInterval;

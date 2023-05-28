@@ -39,8 +39,6 @@ public:
     }
 
     void set_index(int ndx) { index = ndx; }
-
-    void set_is_playing(bool value, bool clean);
     
     void set_slice_position(float start);
     void set_slice_length(float slice);

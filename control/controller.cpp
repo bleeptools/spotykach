@@ -5,14 +5,14 @@ using namespace spotykach;
 
 using namespace daisy;
 
-void Controller::initialize(DaisySeed& hw, Core& core) {
+void Controller::initialize(DaisySeed& hw, Core& core, Clock& clock) {
     
     init_knobs(hw);
     init_toggles(hw);
     
     hw.adc.Start();
 
-    init_sensor(core);
+    init_sensor(core, clock);
 
     _store.initialize(hw);
     if (_store.is_updated()) {
@@ -49,14 +49,13 @@ void Controller::init_toggles(DaisySeed& hw) {
 }
 
 using Target = DescreteSensor::Target;
-void Controller::init_sensor(Core& core) {
+void Controller::init_sensor(Core& core, Clock &clock) {
     _sensor.initialize();
 
     auto& t_a = core.engineAt(0).trig();
     auto& t_b = core.engineAt(1).trig();
 
-    _sensor.set_mode(DescreteSensorPad::Mode::Toggle, Target::PlayStop);
-
+    _sensor.set_on_touch([&clock] { clock.toggle_is_running(); }, Target::PlayStop);
     _sensor.set_on_touch([&t_a, this] { this->store_pattern_index_a(t_a.prev_pattern(), t_a.grid()); }, Target::PatternMinusA);
     _sensor.set_on_touch([&t_a, this] { this->store_pattern_index_a(t_a.next_pattern(), t_a.grid()); }, Target::PatternPlusA);
     _sensor.set_on_touch([&t_b, this] { this->store_pattern_index_b(t_b.prev_pattern(), t_b.grid()); }, Target::PatternMinusB);
@@ -157,7 +156,7 @@ void Controller::set_global_toggles(Core& s) {
     }
 }
 
-void Controller::read_sensor(Core& core, Leds& leds, Clock& clck) {
+void Controller::read_sensor(Core& core, Leds& leds, Clock& clock) {
     _sensor.process();
 
     auto& e_a = core.engineAt(0);
@@ -175,25 +174,19 @@ void Controller::read_sensor(Core& core, Leds& leds, Clock& clck) {
     _holding_rev_b = !_rec_b && _sensor.is_on(Target::OneShotRevB);
     
 
-    auto is_playing_toggled = _sensor.is_on(Target::PlayStop);
     auto holding_a = _holding_fwd_a || _holding_rev_a;
     auto holding_b = _holding_fwd_b || _holding_rev_b;
 
-    auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
-    _is_playing_toggled = is_playing_toggled;
-
-    clck.set_is_playing(is_playing_toggled);
-    e_a.set_is_playing(is_playing_toggled, reset);
-    e_b.set_is_playing(is_playing_toggled, reset);
+    auto is_clock_running = clock.is_running();
 
     PlaybackControls pc;
-    pc.ctns_a = !(_rec_a && is_playing_toggled) && (_holding_fwd_a || _holding_rev_a);
-    pc.ctns_b = !(_rec_b && is_playing_toggled) && (_holding_fwd_b || _holding_rev_b);
+    pc.ctns_a = !(_rec_a && is_clock_running) && (_holding_fwd_a || _holding_rev_a);
+    pc.ctns_b = !(_rec_b && is_clock_running) && (_holding_fwd_b || _holding_rev_b);
     pc.rev_a = _holding_rev_a;
     pc.rev_b = _holding_rev_b;
     core.set_playback_controls(pc);
 
-    leds.set_led_a_on(holding_a && !is_playing_toggled);
-    leds.set_led_b_on(holding_b && !is_playing_toggled);
+    leds.set_led_a_on(holding_a && !is_clock_running);
+    leds.set_led_b_on(holding_b && !is_clock_running);
     leds.set_rec_on(_rec_a || _rec_b);
 }
