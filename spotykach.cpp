@@ -2,9 +2,10 @@
 #include "core/globals.h"
 #include "core/core.h"
 #include "control/controller.h"
-#include "control/sync.h"
+#include "control/clock.h"
 #include "control/leds.h"
 #include "common/deb.h"
+#include "control/clock.h"
 
 using namespace daisy;
 using namespace blptls;
@@ -14,17 +15,17 @@ DaisySeed hw;
 Controller controller;
 Core core;
 PlaybackParameters p;
-Sync snc;
+Clock clck;
 Leds leds;
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size) {
 	static int cnfg_cnt { 0 };
 	if (++cnfg_cnt == 40) {
-		p.tempo = snc.tempo();
+		p.tempo = clck.tempo();
 		p.sampleRate = kSampleRate;
 		cnfg_cnt = 0;
 	}
-	snc.tick();
+	clck.tick();
 	core.preprocess(p);
 	core.process(in, out, size);
 }
@@ -37,7 +38,7 @@ int main(void) {
 	//HW::hw().startLog();
 
 	core.initialize();
-	snc.run(core);
+	clck.run(core);
 	controller.initialize(hw, core);
 
 	leds.initialize();
@@ -50,12 +51,12 @@ int main(void) {
 
 	uint32_t count_limit = 10e2;
 	while(1) {
-		snc.pull(hw);
+		clck.pull(hw);
 		leds.tick();
 		static uint32_t counter = 0;
 		if (++counter == count_limit ) {
 			counter = 0;
-			controller.set_parameters(core, leds, snc);
+			controller.set_parameters(core, leds, clck);
 		}
 	}
 }

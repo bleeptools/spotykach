@@ -9,7 +9,7 @@
 #include "descrete.sensor.h"
 #include "leds.h"
 #include "persistense.h"
-#include "sync.h"
+#include "clock.h"
 
 namespace blptls {
 namespace spotykach {
@@ -21,7 +21,7 @@ public:
 
     void initialize(daisy::DaisySeed& hw, Core& s);
 
-    void set_parameters(Core& core, Leds& leds, Sync& snc);
+    void set_parameters(Core& core, Leds& leds, Clock& clck);
 
     bool is_playing();
 
@@ -35,10 +35,10 @@ private:
     void init_knobs(daisy::DaisySeed& hw);
     void init_toggles(daisy::DaisySeed& hw);
     void set_persisted(Core& core);
-    void set_knob_parameters(Core &s, Sync& snc);
+    void set_knob_parameters(Core &s, Clock& clck);
     void set_channel_toggles(Engine& e, ChannelToggles& ct, int i);
     void set_global_toggles(Core& s);
-    void read_sensor(Core& core, Leds& leds, Sync& sync);
+    void read_sensor(Core& core, Leds& leds, Clock& clck);
 
     void store_pattern_index_a(int index, Grid g);
     void store_pattern_index_b(int index, Grid g);

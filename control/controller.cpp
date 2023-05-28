@@ -84,19 +84,20 @@ void Controller::set_persisted(Core& core) {
     t_b.init_pattern_indexes({ _store.even_pattern_b(), _store.cword_pattern_b() });
 }
 
-void Controller::set_parameters(Core& core, Leds& leds, Sync& snc) {
+void Controller::set_parameters(Core& core, Leds& leds, Clock& clck) {
     for (int i = 0; i < core.enginesCount(); i++) set_channel_toggles(core.engineAt(i), _channel_toggles[i], i);
     set_global_toggles(core);
 
-    read_sensor(core, leds, snc);
 
-    set_knob_parameters(core, snc);
+    read_sensor(core, leds, clck);
+
+    set_knob_parameters(core, clck);
 };
 
 using namespace blptls;
 using namespace spotykach;
 using KT = Knob::Target;
-void Controller::set_knob_parameters(Core& s, Sync& snc) {
+void Controller::set_knob_parameters(Core& s, Clock& clck) {
     auto& a = s.engineAt(0);
     auto& b = s.engineAt(1);
     for (size_t i = 0; i < _knobs.size(); i++) {
@@ -107,7 +108,7 @@ void Controller::set_knob_parameters(Core& s, Sync& snc) {
             case KT::SliceLengthA:      a.set_slice_length(v);      break;
             case KT::RetriggerA:        a.trig().set_retrigger(v);  break;
             case KT::JitterAmountA:     a.set_jitter_amount(v);     break;
-            case KT::Tempo:             snc.set_tempo(v);           break;
+            case KT::Tempo:             clck.set_tempo(v);           break;
             case KT::VolumeCrossfade:   s.setVolumeBalance(v);      break;
             case KT::PatternCrossfade:  s.set_pattern_balance(v);   break;
             case KT::SlicePositionB:    b.set_slice_position(v);    break;
@@ -156,7 +157,7 @@ void Controller::set_global_toggles(Core& s) {
     }
 }
 
-void Controller::read_sensor(Core& core, Leds& leds, Sync& snc) {
+void Controller::read_sensor(Core& core, Leds& leds, Clock& clck) {
     _sensor.process();
 
     auto& e_a = core.engineAt(0);
@@ -181,7 +182,7 @@ void Controller::read_sensor(Core& core, Leds& leds, Sync& snc) {
     auto reset = is_playing_toggled && !(_is_playing_toggled || holding_a || holding_b);
     _is_playing_toggled = is_playing_toggled;
 
-    snc.set_is_playing(is_playing_toggled);
+    clck.set_is_playing(is_playing_toggled);
     e_a.set_is_playing(is_playing_toggled, reset);
     e_b.set_is_playing(is_playing_toggled, reset);
 

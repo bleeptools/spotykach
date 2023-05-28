@@ -8,10 +8,10 @@
 namespace blptls {
 namespace spotykach {
 
-class Sync {
+class Clock {
 public:
-    Sync() = default;
-    ~Sync() = default;   
+    Clock() = default;
+    ~Clock() = default;   
 
     void run(Clockable& core);
     void tick();

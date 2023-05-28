@@ -1,4 +1,4 @@
-#include "sync.h"
+#include "clock.h"
 #include "layout.h"
 #include "../common/fcomp.h"
 #include "../core/globals.h"
@@ -6,7 +6,7 @@
 using namespace blptls;
 using namespace spotykach;
 
-void Sync::run(Clockable& clockable) {
+void Clock::run(Clockable& clockable) {
     _clockable = &clockable;
     daisy::GPIO::Config cfg;
 #ifdef ROEY_LAYOUT
@@ -18,7 +18,7 @@ void Sync::run(Clockable& clockable) {
 }
 
 // Called by internal interrupt timer (audio callback in this implementation).
-void Sync::tick() {
+void Clock::tick() {
     if (!_is_playing) return;
     emit_ticks();
 }
@@ -35,7 +35,7 @@ _resync - flag to resync to external clock. Is set to true once external clock t
 _hold - flag to stop advancing internal timeline if the number of internal ticks exceeded expected count of internal ticks per extrnal tick
 kTRTime - internal resolution (ppqn) multiplied by interrupt interval.
 */
-void Sync::emit_ticks() {
+void Clock::emit_ticks() {
     uint32_t nticks = 0;
 
     //If we generated more internal ticks per extrnal tick as expected,
@@ -89,7 +89,7 @@ method only schedules playback. Actual playback
 starts on the first tick of the external clock.
 see clock_in_tick() below.
 */
-void Sync::set_is_playing(bool is_playing) {
+void Clock::set_is_playing(bool is_playing) {
     if (is_playing == _is_playing) return;
      
     if (is_playing) {
@@ -106,7 +106,7 @@ void Sync::set_is_playing(bool is_playing) {
 Setting tempo from internal control. 
 Has no effect in case of syncing to extrnal clock.
 */
-void Sync::set_tempo(float norm_value) {
+void Clock::set_tempo(float norm_value) {
     if (fcomp(norm_value, _raw_manual_tempo)) return;
     _raw_manual_tempo = norm_value;
     const auto clock_off_offset = 10;
@@ -124,7 +124,7 @@ void Sync::set_tempo(float norm_value) {
 /*
 Read external clock pin
 */
-void Sync::pull(daisy::DaisySeed& hw) {
+void Clock::pull(daisy::DaisySeed& hw) {
     auto new_state = g.Read();
     if (new_state && !_last_state) {
         external_clock_tick();
@@ -138,7 +138,7 @@ This method starts playback on first received clock
 after playback was scheduled. After that, calls sync 
 for every tick received.
 */
-void Sync::external_clock_tick() {
+void Clock::external_clock_tick() {
     if (!external_clock()) return;
     if (!_is_playing && !_is_about_to_play) return;
 
@@ -153,7 +153,7 @@ void Sync::external_clock_tick() {
     }
 }
 
-void Sync::reset() {
+void Clock::reset() {
     _fticks = 0;
     _ticks = 0;
     _ticks_at_last_clock = 0;
