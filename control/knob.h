@@ -72,7 +72,7 @@ private:
             case KT::SliceLengthA:      return A9;
             case KT::RetriggerA:        return A8;
             case KT::JitterAmountA:     return A11;
-            case KT::Tempo:        return A7;
+            case KT::Tempo:             return A7;
             case KT::VolumeCrossfade:   return A5;
             case KT::PatternCrossfade:  return A6;
             case KT::Pitch:             return A4;

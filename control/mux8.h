@@ -7,7 +7,6 @@ struct Mux8 {
 public: 
     Mux8() = default;
     ~Mux8() = default;
-
     
     using ADCChannel = int16_t;
     using Index = int16_t;
