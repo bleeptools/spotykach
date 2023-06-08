@@ -59,7 +59,7 @@ enum class Knobs {
     SlicePositionB    = A2,
     SliceLengthB      = A1,
     RetriggerB        = A3,
-    JitterAmountB     = A
+    JitterAmountB     = A0
   #endif
 };
 
@@ -249,7 +249,13 @@ void testLEDs() {
   pinMode(D8, OUTPUT);
   pinMode(D9, OUTPUT);
   pinMode(D10, OUTPUT);
+  digitalWrite(D8, 1);
+  digitalWrite(D9, 1);
+  digitalWrite(D10, 1);
 #else
+  pinMode(D4, OUTPUT);
+  pinMode(D5, OUTPUT);
+  pinMode(D6, OUTPUT);
   digitalWrite(D4, 1);
   digitalWrite(D5, 1);
   digitalWrite(D6, 1);
