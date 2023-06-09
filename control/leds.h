@@ -3,10 +3,10 @@
 #include <algorithm>
 #include "hid/led.h"
 #include "../core/globals.h"
+#include "layout.h"
 
 namespace blptls {
 namespace spotykach {
-
 
 class Leds {
 public:
