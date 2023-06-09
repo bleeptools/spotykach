@@ -1,18 +1,14 @@
-
-#include <Wire.h>
+#include "DaisyDuino.h"
 #include "Adafruit_MPR121.h"
+#include <Wire.h>
 
 #define ROEY_LAYOUT
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   setupSwitches();
   setupPads();
-
-  // testLED_A();
-  // testLED_B();
-  // testLED_R();
 }
 
 void loop() {
@@ -21,6 +17,10 @@ void loop() {
   //testKnobsG();
   //testSwitches();
   //testPads();
+
+  testLED_A();
+  testLED_B();
+  testLED_R();
   delay(200);
 }
 
