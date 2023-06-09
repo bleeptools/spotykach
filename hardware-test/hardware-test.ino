@@ -2,15 +2,7 @@
 #include <Wire.h>
 #include "Adafruit_MPR121.h"
 
-// #define ROEY_LAYOUT
-
-void setupSwitches();
-void setupPads();
-void testKnobsA();
-void testKonbsB();
-void testKnobsG();
-void testSwitches();
-void testPads();
+#define ROEY_LAYOUT
 
 void setup() {
   Serial.begin(115200);
@@ -18,7 +10,9 @@ void setup() {
   setupSwitches();
   setupPads();
 
-  //testLEDs();
+  // testLED_A();
+  // testLED_B();
+  // testLED_R();
 }
 
 void loop() {
@@ -244,20 +238,32 @@ void testPads() {
 ////////////////////////////////////////
 //// LEDS //////////////////////////////
 
-void testLEDs() {
+void testLED_A() {
 #ifdef ROEY_LAYOUT  
-  pinMode(D8, OUTPUT);
-  pinMode(D9, OUTPUT);
-  pinMode(D10, OUTPUT);
-  digitalWrite(D8, 1);
-  digitalWrite(D9, 1);
-  digitalWrite(D10, 1);
+  pinMode(D29, OUTPUT);
+  digitalWrite(D29, 1);
 #else
   pinMode(D4, OUTPUT);
-  pinMode(D5, OUTPUT);
-  pinMode(D6, OUTPUT);
   digitalWrite(D4, 1);
-  digitalWrite(D5, 1);
+#endif
+}
+
+void testLED_B() {
+#ifdef ROEY_LAYOUT  
+  pinMode(D26, OUTPUT);
+  digitalWrite(D26, 1);
+#else
+  pinMode(D6, OUTPUT);
   digitalWrite(D6, 1);
+#endif
+}
+
+void testLED_R() {
+#ifdef ROEY_LAYOUT  
+  pinMode(D27, OUTPUT);
+  digitalWrite(D27, 1);
+#else
+  pinMode(D5, OUTPUT);
+  digitalWrite(D5, 1);
 #endif
 }

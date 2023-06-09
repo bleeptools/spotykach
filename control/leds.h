@@ -15,9 +15,9 @@ public:
 
     void initialize() {
     #ifdef ROEY_LAYOUT
-        _led_a.Init(daisy::seed::D8, false, 31250);
-        _led_b.Init(daisy::seed::D9, false, 31250);
-        _led_r.Init(daisy::seed::D10, false);
+        _led_a.Init(daisy::seed::D29, false, 31250);
+        _led_b.Init(daisy::seed::D26, false, 31250);
+        _led_r.Init(daisy::seed::D27, false);
     #else
         _led_a.Init(daisy::seed::D4, false, 31250);
         _led_b.Init(daisy::seed::D6, false, 31250);
