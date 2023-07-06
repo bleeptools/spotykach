@@ -9,9 +9,19 @@ Please ensure polarity of the LEDs is right. An anode (longer leg) should go int
 Tip: you can use painters tape to hold leds in place while soldering.
 - Place and solder red LED into the slot 33 as shown at the photo. 
 - Place and solder white LEDs into slots 28 and 38 as shown at the photo.
-- Wire LED slots to the board breakout as following:
+- Wire LED slots to the board breakout using 220 redidtoes
+- as following:
 
-  LED   | Slot Number | Breakout Number | Daisy pin number |
-  |-----|-------------|-----------------|------------------|
-  |     |             |                 |                  |
-  |     |             |
+  |  LED  | Slot Number | Breakout Number |
+  |-------|-------------|-----------------|
+  | white |     28      |        6        |
+  | white |     38      |        8        |
+  |  red  |     33      |        7        |
+
+- Open hardwaretest.ino and uncomment the following calls in ```setup()```:
+  ```
+  testLED_A();
+  testLED_B();
+  testLED_R();
+  ```
+- Connect Daisy with a computer and run hardwaretest.ino. All three leds should 
