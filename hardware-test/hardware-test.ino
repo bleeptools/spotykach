@@ -8,7 +8,10 @@ void setup() {
   Serial.begin(9600);
 
   setupSwitches();
-  setupPads();
+  // setupPads();
+  testLED_A();
+  testLED_B();
+  testLED_R();
 }
 
 void loop() {
@@ -18,9 +21,7 @@ void loop() {
   //testSwitches();
   //testPads();
 
-  testLED_A();
-  testLED_B();
-  testLED_R();
+  Serial.println("Testing");
   delay(200);
 }
 
@@ -196,7 +197,10 @@ Adafruit_MPR121 cap = Adafruit_MPR121();
 void setupPads() {
    if (!cap.begin(0x5A)) {
       Serial.println("MPR121 not found, check wiring?");
-    while (1);
+    while (1) {
+      Serial.println("PLEASE CONNECT MPR121 TO CONTINUE TESTING");
+      delay(200);
+    }
   }
 }
 
