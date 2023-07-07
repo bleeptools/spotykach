@@ -61,6 +61,14 @@ Tip: you can use painters tape to hold leds in place while soldering.
   | Jitter Amount B   | 66          | 32              |
   | Slice Position B  | 68          | 31              |
   | Slice Length B    | 70          | 30              |
+- Check the wiring with potentiometer.
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment the following calls:
+```
+void setup() {
+
+}
+
+```
 
 #### Switches 
   | Function          | Slot Number | Breakout Number |
@@ -80,3 +88,4 @@ Tip: you can use painters tape to hold leds in place while soldering.
   | Audio In          | 36          | 16              |
   | Output A          | 41          | 18              |
   | Output B          | 46          | 19              |
+
