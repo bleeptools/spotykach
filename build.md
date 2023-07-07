@@ -62,13 +62,16 @@ Tip: you can use painters tape to hold leds in place while soldering.
   | Slice Position B  | 68          | 31              |
   | Slice Length B    | 70          | 30              |
 - Check the wiring with potentiometer.
-- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment the following calls:
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment one by one the following lines:
 ```
 void setup() {
-
+  testKnobsA();
+  testKonbsB();
+  testGlobalKnobs();
 }
-
 ```
+
+- Connect Daisy to the computer and flash 
 
 #### Switches 
   | Function          | Slot Number | Breakout Number |
