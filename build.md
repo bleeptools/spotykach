@@ -73,4 +73,10 @@ Tip: you can use painters tape to hold leds in place while soldering.
   | Reverse B         | 59          | 10              |
   | Pattern Mode B    | 78          | 11              |
 
-
+#### Sockets
+  | Function          | Slot Number | Breakout Number |
+  |-------------------|-------------|-----------------|
+  | Clock In          | 31          | 45              |
+  | Audio In          | 36          | 16              |
+  | Output A          | 41          | 18              |
+  | Output B          | 46          | 19              |
