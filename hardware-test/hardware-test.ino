@@ -7,17 +7,17 @@
 void setup() {
   Serial.begin(9600);
 
-  setupSwitches();
+  // setupSwitches();
   // setupPads();
-  testLED_A();
-  testLED_B();
-  testLED_R();
+  // testLED_A();
+  // testLED_B();
+  // testLED_R();
 }
 
 void loop() {
-  //testKnobsA();
-  //testKonbsB();
-  //testKnobsG();
+  testKnobsA();
+  testKonbsB();
+  testGlobalKnobs();
   //testSwitches();
   //testPads();
 
@@ -84,7 +84,7 @@ void testKonbsB() {
   Serial.println(KR(JitterAmountB));
 }
 
-void testKnobsG() {
+void testGlobalKnobs() {
   Serial.print("Tempo ");
   Serial.println(KR(Tempo));
   Serial.print("Volume Crossfade ");
