@@ -21,8 +21,8 @@ Tip: you can use painters tape to hold leds in place while soldering.
   |  LED  | Slot Number | Breakout Number |
   |-------|-------------|-----------------|
   | white |     28      |        6        |
-  | white |     38      |        8        |
   |  red  |     33      |        7        |
+  | white |     38      |        8        |
 
 - Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment the following calls in ```setup()```:
   ```
@@ -33,6 +33,19 @@ Tip: you can use painters tape to hold leds in place while soldering.
 - Connect Daisy with a computer and run hardware-test.ino. All three leds should lit up.
 
 ### MPR121 touch sensor
-- Place and solder MPR121 female header on the bottom of the board as shown in photo.
+- Place and solder MPR121 female header at the bottom of the board as shown in photo.
 - Place and solder front pannel female header.
 - Place and solder male header to the front panel as shown in the photo.
+[TODO]
+
+### Pots, Switches and Sockets
+- Place pots, switches and sockets on the board as shown on the photo. Don't solder yet.
+- Put the front panel in place and screw 2-3 nuts on the pots to hold it in place.
+- Make sure all the components are at their place.
+- Turn the assembly upside down and solder components. Soldering switches you'll need to push them from the opposite side to hold them in place.
+- Remove front panel
+- Turn all the pots to the middle and vheck potential short circuits with the multimeter.
+- Wire controls slots to the breakout as following:
+
+
+
