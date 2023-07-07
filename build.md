@@ -71,7 +71,9 @@ void setup() {
 }
 ```
 
-- Connect Daisy to the computer and flash 
+- Connect Daisy to the computer and run hardware-test. Open serial monitor and make sure autoscroll is enabled. You should see outup simillar to this:
+
+   
 
 #### Switches 
   | Function          | Slot Number | Breakout Number |
