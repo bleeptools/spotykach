@@ -23,7 +23,8 @@ Tip: you can use painters tape to hold leds in place while soldering.
   | white |     28      |        6        |
   |  red  |     33      |        7        |
   | white |     38      |        8        |
-
+  
+- Check the wiring with the multimeter
 - Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment the following calls in ```setup()```:
   ```
   testLED_A();
@@ -41,11 +42,35 @@ Tip: you can use painters tape to hold leds in place while soldering.
 ### Pots, Switches and Sockets
 - Place pots, switches and sockets on the board as shown on the photo. Don't solder yet.
 - Put the front panel in place and screw 2-3 nuts on the pots to hold it in place.
-- Make sure all the components are at their place.
+- Make sure all the components are placed properly.
 - Turn the assembly upside down and solder components. Soldering switches you'll need to push them from the opposite side to hold them in place.
-- Remove front panel
-- Turn all the pots to the middle and vheck potential short circuits with the multimeter.
+- Remove the front panel
+- Turn all the pots to the middle and check for short circuits with the multimeter.
 - Wire controls slots to the breakout as following:
+#### Pots
+  | Function          | Slot Number | Breakout Number |
+  |-------------------|-------------|-----------------|
+  | Jitter Amount A   | 11          | 39              |
+  | Slice Position A  | 13          | 40              |
+  | Slice Length A    | 15          | 43              |
+  | Retrigger A       | 22          | 38              |
+  | Speed             | 32          | 36              |
+  | Pattern Crossfade | 43          | 35              |
+  | Pitch             | 50          | 34              |
+  | Retrigger B       | 57          | 33              |
+  | Jitter Amount B   | 66          | 32              |
+  | Slice Position B  | 68          | 31              |
+  | Slice Length B    | 70          | 30              |
 
+#### Switches 
+  | Function          | Slot Number | Breakout Number |
+  |-------------------|-------------|-----------------|
+  | Pattern Mode A    | 03          | 05              |
+  | Reverse A         | 24          | 44              |
+  | Split Outputs     | 37          | 42              |
+  | Mutex             | 42          | 41              |
+  | Cascade           | 47          | 09              |
+  | Reverse B         | 59          | 10              |
+  | Pattern Mode B    | 78          | 11              |
 
 
