@@ -30,4 +30,9 @@ Tip: you can use painters tape to hold leds in place while soldering.
   testLED_B();
   testLED_R();
   ```
-- Connect Daisy with a computer and run hardware-test.ino. All three leds should lit up. 
+- Connect Daisy with a computer and run hardware-test.ino. All three leds should lit up.
+
+### MPR121 touch sensor
+- Place and solder MPR121 female header on the bottom of the board as shown in photo.
+- Place and solder front pannel female header.
+- Place and solder male header to the front panel as shown in the photo.
