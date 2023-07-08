@@ -33,12 +33,26 @@ Tip: you can use painters tape to hold leds in place while soldering.
   ```
 - Connect Daisy with a computer and run hardware-test.ino. All three leds should lit up.
 
+### Mix fader
+- Insert four pots at slots 11, 15, 66 and 70. Don't solder yet, but make them sit relatively tight by bending slightly side legs so they produce enough tension
+- Bend slightly legs of the fader outside so they fit into the footprints pictured at the photo.
+- Put the fader in place and push in slightly. It has to be horisontal but doesn't have to touch the board.
+- Put the front pannel on top, screw the nuts on pots.
+- Insert the screws of the fader and screw them without tightening them. This way you can check that fader is exactly wher it supposed to be.
+- Turn the assembly upside down and solder the fader legs.
+- Cut short pieces of whire and solder jumpers from the fader legs to corresponding footprints as on the scheme.
+- Remove screws and the front pannel for now.
+
 ### MPR121 touch sensor
-- Place and solder MPR121 female header at the bottom of the board as shown in photo.
-- Place and solder front pannel female header.
+- Place and solder MPR121 female header at the bottom of the perfboard as shown at the photo.
 - Insert male header, put front panel on top, screw couple of nuts and align front pannel footprints with the header.
 - Solder male header to the front panel as shown in the photo. Every touch pad has a dot near it which can be used for checking soldering with multimeter.
+- You'll wire MPR121 in the next step.
+
+### Clock input circuit and MPR121 wiring
+- Solder and wire clock input circuit at the perfboard as shown at the scheme below. Please double check transistor placement. Note, the transistor should not protrude more than front panel header.
 - Wire MPR121 as following:
+  
   | MPR121 Breakout | Daisy Breakout |
   |-----------------|----------------|
   | SDA             | 13             |
