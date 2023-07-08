@@ -20,9 +20,9 @@ Tip: you can use painters tape to hold leds in place while soldering.
 
   |  LED  | Slot Number | Breakout Number |
   |-------|-------------|-----------------|
-  | white |     28      |        6        |
-  |  red  |     33      |        7        |
-  | white |     38      |        8        |
+  | white |     28      |        44       |
+  |  red  |     33      |        6        |
+  | white |     38      |        42       |
   
 - Check the wiring with the multimeter
 - Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment the following calls in ```setup()```:
@@ -36,8 +36,15 @@ Tip: you can use painters tape to hold leds in place while soldering.
 ### MPR121 touch sensor
 - Place and solder MPR121 female header at the bottom of the board as shown in photo.
 - Place and solder front pannel female header.
-- Place and solder male header to the front panel as shown in the photo.
-[TODO]
+- Insert male header, put front panel on top, screw couple of nuts and align front pannel footprints with the header.
+- Solder male header to the front panel as shown in the photo. Every touch pad has a dot near it which can be used for checking soldering with multimeter.
+- Wire MPR121 as following:
+  | MPR121 Breakout | Daisy Breakout |
+  |-----------------|----------------|
+  | SDA             | 13             |
+  | SCL             | 12             |
+  | 3.3V            | 46             |
+  | GND             | GND            |
 
 ### Pots, Switches and Sockets
 - Place pots, switches and sockets on the board as shown on the photo. Don't solder yet.
@@ -78,18 +85,18 @@ void setup() {
 #### Switches 
   | Function          | Slot Number | Breakout Number |
   |-------------------|-------------|-----------------|
-  | Pattern Mode A    | 03          | 05              |
-  | Reverse A         | 24          | 44              |
-  | Split Outputs     | 37          | 42              |
-  | Mutex             | 42          | 41              |
-  | Cascade           | 47          | 09              |
-  | Reverse B         | 59          | 10              |
-  | Pattern Mode B    | 78          | 11              |
+  | Pattern Mode A    | 03          | 45              |
+  | Reverse A         | 24          | 05              |
+  | Split Outputs     | 37          | 10              |
+  | Mutex             | 42          | 09              |
+  | Cascade           | 47          | 41              |
+  | Reverse B         | 59          | 08              |
+  | Pattern Mode B    | 78          | 07              |
 
 #### Sockets
   | Function          | Slot Number | Breakout Number |
   |-------------------|-------------|-----------------|
-  | Clock In          | 31          | 45              |
+  | Clock In          | 31          | 11              |
   | Audio In          | 36          | 16              |
   | Output A          | 41          | 18              |
   | Output B          | 46          | 19              |
