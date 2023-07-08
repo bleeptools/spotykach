@@ -51,6 +51,7 @@ Tip: you can use painters tape to hold leds in place while soldering.
 
 ### Clock input circuit and MPR121 wiring
 - Solder and wire clock input circuit at the perfboard as shown at the scheme below. Please double check transistor placement. Note, the transistor should not protrude more than front panel header.
+  ![Circuitschematics](img/)
 - Wire MPR121 as following:
   
   | MPR121 Breakout | Daisy Breakout |
