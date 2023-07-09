@@ -35,7 +35,7 @@ Tip: you can use painters tape to hold leds in place while soldering.
   testLED_B();
   testLED_R();
   ```
-- Connect Daisy with a computer and run hardware-test.ino. All three leds should lit up.
+- Connect Daisy to a computer and run hardware-test.ino. All three LEDs should lit up.
 
 ### Mix fader
 - Insert four pots at slots 11, 15, 66 and 70. Don't solder yet, but make them sit relatively tight by bending slightly side legs so they produce enough tension
