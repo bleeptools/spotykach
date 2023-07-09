@@ -1,7 +1,9 @@
 # Build Instructions (work in progress)
 
 ### Daisy Seed
-- Place and solder Daisy Seed female headers as shown at the photo (add photo). Tip: You can use painter's tape to hold them in place while soldering.
+- Place and solder Daisy Seed female headers as shown at the photo. Tip: You can use painter's tape to hold them in place while soldering.
+  
+  <img src="pic/daisy_headers.jpg" width="800px"/>
 - Use multimeter to check there are no short circuits between pins.
 - Insert male headers into female counterparts, place Daisy on top and solder.
 - Wire power and ground as following:
@@ -13,6 +15,8 @@
 
 ### LEDs
 Please ensure polarity of LEDs is right. An anode (longer leg) should go into signal hole while a katode (shorter leg) goes into the ground hole.
+
+<img src="pic/diode_polarity.jpg" width="800px"/>
 Tip: you can use painters tape to hold leds in place while soldering.
 - Place and solder red LED into the slot 33 as shown at the photo. 
 - Place and solder white LEDs into slots 28 and 38 as shown at the photo.
@@ -51,7 +55,8 @@ Tip: you can use painters tape to hold leds in place while soldering.
 
 ### Clock input circuit and MPR121 wiring
 - Solder and wire clock input circuit at the perfboard as shown at the scheme below. Please double check transistor placement. Note, the transistor should not protrude more than front panel header.
-  ![Circuitschematics](pic/GPIO.png)
+  
+  <img src="pic/gate_in.png" width="800px"/>
 - Wire MPR121 as following:
   
   | MPR121 Breakout | Daisy Breakout |
