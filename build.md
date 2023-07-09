@@ -36,16 +36,17 @@ Tip: you can use painters tape to hold leds in place while soldering.
   testLED_R();
   ```
 - Connect Daisy to a computer and run hardware-test.ino. All three LEDs should lit up.
+- Disconnect Daisy!
 
 ### Mix fader
-- Insert four pots at slots 11, 15, 66 and 70. Don't solder yet, but make them sit relatively tight by bending slightly side legs so they produce enough tension
+- Insert four pots at slots 11, 15, 66 and 70. Don't solder yet, but make them sit relatively tight by bending slightly side legs so they produce enough tension.
 - Bend slightly legs of the fader outside so they fit into the footprints pictured at the photo.
 - Put the fader in place and push in slightly. It has to be horisontal but doesn't have to touch the board.
 - Put the front pannel on top, screw the nuts on pots.
-- Insert the screws of the fader and screw them without tightening them. This way you can check that fader is exactly wher it supposed to be.
+- Insert the screws of the fader and screw them without tightening. This way you can ensure that fader is exactly where it supposed to be.
 - Turn the assembly upside down and solder the fader legs.
 - Cut short pieces of whire and solder jumpers from the fader legs to corresponding footprints as on the scheme.
-- Remove screws and the front pannel for now.
+- Remove the front pannel and pots for now.
 
 ### MPR121 touch sensor
 - Place and solder MPR121 female header at the bottom of the perfboard as shown at the photo.
