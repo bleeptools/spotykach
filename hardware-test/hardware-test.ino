@@ -2,26 +2,22 @@
 #include "Adafruit_MPR121.h"
 #include <Wire.h>
 
-#define ROEY_LAYOUT
-
 void setup() {
   Serial.begin(9600);
 
   // setupSwitches();
   // setupPads();
-  // testLED_A();
-  // testLED_B();
-  // testLED_R();
+  testLED_A();
+  testLED_B();
+  testLED_R();
 }
 
 void loop() {
-  testKnobsA();
-  testKonbsB();
-  testGlobalKnobs();
+  // testKnobsA();
+  // testKonbsB();
+  // testGlobalKnobs();
   //testSwitches();
   //testPads();
-
-  Serial.println("Testing");
   delay(200);
 }
 
@@ -29,20 +25,6 @@ void loop() {
 //// KNOBS /////////////////////////////
 
 enum class Knobs {
-  #ifdef ROEY_LAYOUT
-    SlicePositionA    = A8,
-    SliceLengthA      = A7,
-    RetriggerA        = A6,
-    JitterAmountA     = A9,
-    Tempo             = A5,
-    VolumeCrossfade   = A11,
-    PatternCrossfade  = A4,
-    Pitch             = A10,
-    SlicePositionB    = A1,
-    SliceLengthB      = A0,
-    RetriggerB        = A3,
-    JitterAmountB     = A2
-  #else
     SlicePositionA    = A10,
     SliceLengthA      = A9,
     RetriggerA        = A8,
@@ -55,7 +37,6 @@ enum class Knobs {
     SliceLengthB      = A1,
     RetriggerB        = A3,
     JitterAmountB     = A0
-  #endif
 };
 
 #ifndef K
@@ -99,15 +80,6 @@ void testGlobalKnobs() {
 //// SWITCHES //////////////////////////
 
 enum class Switches {
-  #ifdef ROEY_LAYOUT
-    GridA     = D1,
-    GridB     = D14,
-    ReverseA  = D2,
-    ReverseB  = D7,
-    Mutex     = D4,
-    Cascade   = D5,
-    Split     = D3
-  #else
     GridA     = D0,
     GridB     = D10,
     ReverseA  = D1,
@@ -115,7 +87,6 @@ enum class Switches {
     Mutex     = D29,
     Cascade   = D27,
     Split     = D30
-  #endif
 };
 
 #ifndef S
@@ -165,19 +136,6 @@ void testSwitches() {
 #endif
 
 enum class Pad {
-  #ifdef ROEY_LAYOUT
-    PlayStop      = _pin(4),
-    OneShotFwdA   = _pin(3),
-    OneShotRevA   = _pin(2),
-    RecordA       = _together(_pin(3), _pin(2)),
-    PatternMinusA = _pin(6),
-    PatternPlusA  = _pin(1),
-    OneShotFwdB   = _pin(5),
-    OneShotRevB   = _pin(0),
-    RecordB       = _together(_pin(5), _pin(0)),
-    PatternMinusB = _pin(8),
-    PatternPlusB  = _pin(9)
-  #else
     PlayStop      = _pin(7),
     OneShotFwdA   = _pin(6),
     OneShotRevA   = _pin(4),
@@ -189,7 +147,6 @@ enum class Pad {
     RecordB       = _together(_pin(9), _pin(10)),
     PatternMinusB = _pin(8),
     PatternPlusB  = _pin(5)
-  #endif
 };
 
 Adafruit_MPR121 cap = Adafruit_MPR121();
@@ -243,31 +200,16 @@ void testPads() {
 //// LEDS //////////////////////////////
 
 void testLED_A() {
-#ifdef ROEY_LAYOUT  
   pinMode(D29, OUTPUT);
   digitalWrite(D29, 1);
-#else
-  pinMode(D4, OUTPUT);
-  digitalWrite(D4, 1);
-#endif
 }
 
 void testLED_B() {
-#ifdef ROEY_LAYOUT  
-  pinMode(D26, OUTPUT);
-  digitalWrite(D26, 1);
-#else
-  pinMode(D6, OUTPUT);
-  digitalWrite(D6, 1);
-#endif
+  pinMode(D27, OUTPUT);
+  digitalWrite(D27, 1);
 }
 
 void testLED_R() {
-#ifdef ROEY_LAYOUT  
-  pinMode(D27, OUTPUT);
-  digitalWrite(D27, 1);
-#else
   pinMode(D5, OUTPUT);
   digitalWrite(D5, 1);
-#endif
 }
