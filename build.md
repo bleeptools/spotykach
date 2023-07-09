@@ -11,7 +11,7 @@
   |-----------------|------------------|
   | 29 (3v3 Analog) |        VCC       |
   |    20 (AGND)    |        GND       |
-  |    38 (DGND)    |        GND       |
+  |    46 (DGND)    |        GND       |
 
 ### LEDs
 Please ensure polarity of LEDs is right. An anode (longer leg) should go into signal hole while a katode (shorter leg) goes into the ground hole.
