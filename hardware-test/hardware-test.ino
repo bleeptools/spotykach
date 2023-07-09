@@ -7,36 +7,37 @@ void setup() {
 
   // setupSwitches();
   // setupPads();
-  testLED_A();
-  testLED_B();
-  testLED_R();
+  // testLED_A();
+  // testLED_B();
+  // testLED_R();
 }
 
 void loop() {
   // testKnobsA();
   // testKonbsB();
   // testGlobalKnobs();
-  //testSwitches();
-  //testPads();
-  delay(200);
+  testFader();
+  // testSwitches();
+  // testPads();
+  delay(100);
 }
 
 ////////////////////////////////////////
 //// KNOBS /////////////////////////////
 
 enum class Knobs {
-    SlicePositionA    = A10,
-    SliceLengthA      = A9,
-    RetriggerA        = A8,
-    JitterAmountA     = A11,
-    Tempo             = A7,
-    VolumeCrossfade   = A5,
-    PatternCrossfade  = A6,
+    JitterAmountA     = A10,
+    SlicePositionA    = A9,
+    SliceLengthA      = A8,
+    RetriggerA        = A7,
+    Tempo             = A6,
+    VolumeCrossfade   = A11,
+    PatternCrossfade  = A5,
     Pitch             = A4,
-    SlicePositionB    = A2,
-    SliceLengthB      = A1,
     RetriggerB        = A3,
-    JitterAmountB     = A0
+    JitterAmountB     = A2,
+    SlicePositionB    = A1,
+    SliceLengthB      = A0
 };
 
 #ifndef K
@@ -68,12 +69,15 @@ void testKonbsB() {
 void testGlobalKnobs() {
   Serial.print("Tempo ");
   Serial.println(KR(Tempo));
-  Serial.print("Volume Crossfade ");
-  Serial.println(KR(VolumeCrossfade));
   Serial.print("Pattern Crossfade ");
   Serial.println(KR(PatternCrossfade));
   Serial.print("Pitch ");
   Serial.println(KR(Pitch));
+}
+
+void testFader() {
+  Serial.print("Volume Crossfade ");
+  Serial.println(KR(VolumeCrossfade));
 }
 
 ////////////////////////////////////////
