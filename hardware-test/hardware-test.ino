@@ -21,7 +21,7 @@ void loop() {
   // testSwitches();
   // testPads();
   // testTrigger();
-  delay(100);
+  // delay(100);
 }
 
 ////////////////////////////////////////
@@ -86,13 +86,13 @@ void testFader() {
 //// SWITCHES //////////////////////////
 
 enum class Switches {
-    GridA     = D0,
-    GridB     = D10,
-    ReverseA  = D1,
-    ReverseB  = D26,
-    Mutex     = D29,
-    Cascade   = D27,
-    Split     = D30
+    GridA     = D30,
+    GridB     = D9,
+    ReverseA  = D4,
+    ReverseB  = D8,
+    Mutex     = D7,
+    Cascade   = D26,
+    Split     = D6
 };
 
 #ifndef S
