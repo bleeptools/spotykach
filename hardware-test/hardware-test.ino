@@ -16,7 +16,7 @@ void loop() {
   // testKnobsA();
   // testKonbsB();
   // testGlobalKnobs();
-  testFader();
+  // testFader();
   // testSwitches();
   // testPads();
   delay(100);
@@ -140,17 +140,17 @@ void testSwitches() {
 #endif
 
 enum class Pad {
-    PlayStop      = _pin(7),
-    OneShotFwdA   = _pin(6),
-    OneShotRevA   = _pin(4),
-    RecordA       = _together(_pin(4), _pin(6)),
-    PatternMinusA = _pin(3),
-    PatternPlusA  = _pin(2),
-    OneShotFwdB   = _pin(9),
-    OneShotRevB   = _pin(10),
-    RecordB       = _together(_pin(9), _pin(10)),
+    PlayStop      = _pin(5),
+    OneShotFwdA   = _pin(4),
+    OneShotRevA   = _pin(3),
+    RecordA       = _together(_pin(3), _pin(4)),
+    PatternMinusA = _pin(2),
+    PatternPlusA  = _pin(1),
+    OneShotFwdB   = _pin(7),
+    OneShotRevB   = _pin(6),
+    RecordB       = _together(_pin(6), _pin(7)),
     PatternMinusB = _pin(8),
-    PatternPlusB  = _pin(5)
+    PatternPlusB  = _pin(9)
 };
 
 Adafruit_MPR121 cap = Adafruit_MPR121();
