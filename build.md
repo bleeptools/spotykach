@@ -100,12 +100,12 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 - Turn all the pots to the middle and check for short circuits with the multimeter.
 - Wire controls slots to the breakout as following:
 #### Pots
-  | Function          | Slot Number | Breakout Number |
+  | Function          | Slot        | Board           |
   |-------------------|-------------|-----------------|
-  | Jitter Amount A   | 11          | 39              |
-  | Slice Position A  | 13          | 40              |
-  | Slice Length A    | 15          | 43              |
-  | Retrigger A       | 22          | 38              |
+  | Jitter Amount A   | 11          | 40              |
+  | Slice Position A  | 13          | 39              |
+  | Slice Length A    | 15          | 38              |
+  | Retrigger A       | 22          | 37              |
   | Speed             | 32          | 36              |
   | Pattern Crossfade | 43          | 35              |
   | Pitch             | 50          | 34              |
@@ -128,18 +128,18 @@ void setup() {
    
 
 #### Switches 
-  | Function          | Slot Number | Breakout Number |
+  | Function          | Slot        | Board           |
   |-------------------|-------------|-----------------|
-  | Pattern Mode A    | 03          | 45              |
+  | Pattern Mode A    | 03          | 49              |
   | Reverse A         | 24          | 05              |
-  | Split Outputs     | 37          | 10              |
-  | Mutex             | 42          | 09              |
+  | Split Outputs     | 37          | 07              |
+  | Mutex             | 42          | 08              |
   | Cascade           | 47          | 41              |
-  | Reverse B         | 59          | 08              |
-  | Pattern Mode B    | 78          | 07              |
+  | Reverse B         | 59          | 09              |
+  | Pattern Mode B    | 78          | 10              |
 
 #### Sockets
-  | Function          | Slot Number | Breakout Number |
+  | Function          | Slot        | Board           |
   |-------------------|-------------|-----------------|
   | Clock In          | 31          | 11              |
   | Audio In          | 36          | 16              |
