@@ -2,26 +2,64 @@
 #include "Adafruit_MPR121.h"
 #include <Wire.h>
 
-void setup() {
-  Serial.begin(9600);
+// #define TEST_KNOBS_A
+// #define TEST_KNOBS_B
+// #define TEST_KNOBS_G
+// #define TEST_SWITCHES
+// #define TEST_PADS
+// #define TEST_TRIGGER
+// #define TEST_LEDS
 
-  // setupSwitches();
-  // setupPads();
-  // testLED_A();
-  // testLED_B();
-  // testLED_R();
-  // setupTriggerTest();
+void setup() {
+  #ifdef TEST_SWITCHES
+  setupSwitches();
+  #endif
+
+  #ifdef TEST_PADS
+  setupPads();
+  #endif
+
+  #ifdef TEST_TRIGGER
+  setupTriggerTest();
+  #endif
+
+  #ifdef TEST_LEDS
+  testLED_A();
+  testLED_B();
+  testLED_R();
+  #endif
 }
 
 void loop() {
-  // testKnobsA();
-  // testKonbsB();
-  // testGlobalKnobs();
-  // testFader();
-  // testSwitches();
-  // testPads();
-  // testTrigger();
-  // delay(100);
+  #ifdef TEST_PADS
+  testPads();
+  #endif
+
+  #ifdef TEST_KNOBS_A
+  testKnobsA();
+  #endif
+  
+  #ifdef TEST_KNOBS_B
+  testKonbsB();
+  #endif
+
+  #ifdef TEST_KNOBS_G
+  testGlobalKnobs();
+  #endif
+
+  #ifdef TEST_FADER
+  testFader();
+  #endif
+
+  #ifdef TEST_SWITCHES
+  testSwitches();
+  #endif
+  
+  #ifdef TEST_TRIGGER
+  testTrigger();
+  #else
+  delay(100);
+  #endif
 }
 
 ////////////////////////////////////////
