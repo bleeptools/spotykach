@@ -10,6 +10,7 @@ void setup() {
   // testLED_A();
   // testLED_B();
   // testLED_R();
+  // setupTriggerTest();
 }
 
 void loop() {
@@ -19,6 +20,7 @@ void loop() {
   // testFader();
   // testSwitches();
   // testPads();
+  // testTrigger();
   delay(100);
 }
 
@@ -216,4 +218,17 @@ void testLED_B() {
 void testLED_R() {
   pinMode(D5, OUTPUT);
   digitalWrite(D5, 1);
+}
+
+////////////////////////////////////////
+//// TRIGGER //////////////////////////////
+
+void setupTriggerTest() {
+  pinMode(D10, INPUT_PULLDOWN);
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void testTrigger() {
+  auto trigger = digitalRead(D10);
+  digitalWrite(LED_BUILTIN, !trigger);
 }
