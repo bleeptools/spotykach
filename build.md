@@ -34,17 +34,12 @@ Please ensure polarity of LEDs is right. An anode (longer leg) should go into si
 <img src="pic/leds_assembled.jpg" width="800px"/>
 
 - Check the wiring with the multimeter
-- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment the following calls in ```setup()```:
-  ```
-  testLED_A();
-  testLED_B();
-  testLED_R();
-  ```
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```#define TEST_LEDS```
 - Connect Daisy to a computer and run hardware-test.ino. All three LEDs should lit up.
 - Disconnect Daisy!
 
 ### Mix fader
-- Insert four pots at slots 11, 15, 66 and 70. Don't solder yet, but make them sit relatively tight by bending slightly side legs so they produce enough tension.
+- Insert four pots in slots 11, 15, 66 and 70. Don't solder yet, but make them sit relatively tight by bending slightly side legs so they produce enough tension.
 - Bend slightly legs of the fader outside so they fit into the footprints pictured at the photo.
 
 <img src="pic/fader_bend.jpg" width="800px"/>
@@ -54,14 +49,14 @@ Please ensure polarity of LEDs is right. An anode (longer leg) should go into si
 
 <img src="pic/fader_placement.jpg" width="800px"/>
   
-- Put the front pannel on top, screw the nuts on pots.
-- Insert the screws of the fader and screw them without tightening. This way you can ensure that fader is exactly where it supposed to be.
+- Put the front pannel on top, screw nuts on pots.
+- Insert screws of the fader and screw them without tightening. This way you can ensure that fader is exactly where it supposed to be.
 - Turn the assembly upside down and solder the fader legs.
 - Cut short pieces of whire and solder jumpers from the fader legs to nearby 3v3A and GND footprints on the back of the board as on the picture above.
 - Remove the front pannel for now.
 - Check the wiring with the multimeter
-- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```testFader()``` inside the ```loop()``` function.
-- Connect Daisy to a computer and run hardware-test.ino. Open serial monitor. You should see below output while moving the fader. The value shuld change in range between 0 (on the left) and 1023 (on the right). There might be slight jitter of the value. That's normal, the Spotykach firmware will smooth it out.
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```#define TEST_FADER```.
+- Connect Daisy to the computer and run hardware-test.ino. Open serial monitor. You should see below output while moving the fader. The value shuld change in range between 0 (on the left) and 1023 (on the right). There might be slight jitter of the value. That's normal, the Spotykach firmware will smooth it out.
 
   <img src="pic/fader_serial.jpg" width="800px"/>
   
@@ -74,8 +69,20 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   <img src="pic/gate_in.png" width="800px"/>
   <img src="pic/gate_in_assembled.jpg" width="800px"/>
 
+- Insert jack socket to the slot 31 and solder as shown below.
+ 
+  <img src="pic/socket_soldering.jpg" width="800px"/>
+
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```#define TEST_TRIGGER```.
+- Connect clock source (Volca sync out, eurorack clock, Keystep sync out)
+- Connect Daisy to the computer and run hardware-test.ino. On-board LED of the Daisy should blink with the clock.
+- Disconnect Daisy!
+
 ### MPR121 touch sensor
 - Place and solder MPR121 female headers at the bottom of the perfboard (back side of the board).
+
+<img src="pic/mpr121_headers.jpg" width="800px"/>
+  
 - Insert MPR121 male headers, put MPR121 board on top and solder.
 - Wire MPR121 as following:
   
@@ -85,6 +92,9 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   | SCL             | 12             |
   | 3.3V            | 46             |
   | GND             | GND            |
+
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```#define TEST_PADS```.
+- Connect Daisy to the computer and run hardware-test.ino. 
 
 ### The front panel
 - Insert and solder front panel female header as shown at the photo. 
