@@ -7,7 +7,7 @@
 - Use multimeter to check there are no short circuits between pins.
 - Insert male headers into female counterparts, place Daisy on top and solder.
 - Wire power and ground as following:
-  | Breakout Number | Target Footprint |
+  | Daisy           | Board            |
   |-----------------|------------------|
   | 29 (3v3 Analog) |        VCC       |
   |    20 (AGND)    |        GND       |
@@ -25,7 +25,7 @@ Please ensure polarity of LEDs is right. An anode (longer leg) should go into si
 
 - Wire LED slots to the board breakout using 220 Ohm resistors as following:
 
-  |  LED  | Slot Number | Breakout Number |
+  |  LED  | Board       | Daisy           |
   |-------|-------------|-----------------|
   | white |     28      |        44       |
   |  red  |     33      |        6        |
@@ -86,7 +86,7 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 - Insert MPR121 male headers, put MPR121 board on top and solder.
 - Wire MPR121 as following:
   
-  | MPR121 Breakout | Daisy Breakout |
+  | MPR121          | Daisy          |
   |-----------------|----------------|
   | SDA             | 13             |
   | SCL             | 12             |
@@ -126,7 +126,7 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 - Wire controls slots to the breakout as following:
 
 #### Sockets
-  | Function          | Slot        | Board           |
+  | Function          | Board       | Daisy           |
   |-------------------|-------------|-----------------|
   | Clock In          | 31          | 11              |
   | Audio In          | 36          | 16              |
@@ -134,7 +134,7 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   | Output B          | 46          | 19              |
   
 #### Pots
-  | Function          | Slot        | Board           |
+  | Function          | Board       | Daisy           |
   |-------------------|-------------|-----------------|
   | Jitter Amount A   | 11          | 40              |
   | Slice Position A  | 13          | 39              |
@@ -149,7 +149,7 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   | Slice Length B    | 70          | 30              |
 
 #### Switches 
-  | Function          | Slot        | Board           |
+  | Function          | Board       | Daisy           |
   |-------------------|-------------|-----------------|
   | Pattern Mode A    | 03          | 49              |
   | Reverse A         | 24          | 05              |
