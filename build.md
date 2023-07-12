@@ -96,7 +96,7 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 - Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```#define TEST_PADS```.
 - Connect Daisy to the computer and run hardware-test.ino. Touching MPR121 pins with a finger or wire you should see the output simillar to this one. Note, only pins 1-9 are used.
 
-<img src="pic/mpr121_serial.jpg" width="800px"/>
+<img src="pic/mpr121_serial.png" width="800px"/>
 
 - Disconnect Daisy!
 
@@ -114,12 +114,25 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 
 ### Pots, Switches and Sockets
 - Place pots, switches and sockets on the board as shown on the photo. Don't solder yet.
-- Put the front panel in place and screw 2-3 nuts on the pots to hold it in place.
+
+<img src="pic/controls.jpg" width="800px"/>
+  
+- Put the front panel in place. Tip: it's easier to put front pannel if the switches are up. 
+- Screw 2-3 nuts on the pots to hold it in place.
 - Make sure all the components are placed properly.
 - Turn the assembly upside down and solder components. Soldering switches you'll need to push them from the opposite side to hold them in place.
 - Remove the front panel
 - Turn all the pots to the middle and check for short circuits with the multimeter.
 - Wire controls slots to the breakout as following:
+
+#### Sockets
+  | Function          | Slot        | Board           |
+  |-------------------|-------------|-----------------|
+  | Clock In          | 31          | 11              |
+  | Audio In          | 36          | 16              |
+  | Output A          | 41          | 18              |
+  | Output B          | 46          | 19              |
+  
 #### Pots
   | Function          | Slot        | Board           |
   |-------------------|-------------|-----------------|
@@ -134,19 +147,6 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   | Jitter Amount B   | 66          | 32              |
   | Slice Position B  | 68          | 31              |
   | Slice Length B    | 70          | 30              |
-- Check the wiring with potentiometer.
-- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment one by one the following lines:
-```
-void setup() {
-  testKnobsA();
-  testKonbsB();
-  testGlobalKnobs();
-}
-```
-
-- Connect Daisy to the computer and run hardware-test. Open serial monitor and make sure autoscroll is enabled. You should see outup simillar to this:
-
-   
 
 #### Switches 
   | Function          | Slot        | Board           |
@@ -159,11 +159,18 @@ void setup() {
   | Reverse B         | 59          | 09              |
   | Pattern Mode B    | 78          | 10              |
 
-#### Sockets
-  | Function          | Slot        | Board           |
-  |-------------------|-------------|-----------------|
-  | Clock In          | 31          | 11              |
-  | Audio In          | 36          | 16              |
-  | Output A          | 41          | 18              |
-  | Output B          | 46          | 19              |
+- Check the wiring with potentiometer.
+- Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment one by one the following lines:
+  ```
+  #define TEST_KNOBS_A
+  #define TEST_KNOBS_B
+  #define TEST_KNOBS_C
+  ```
+- Connect Daisy to the computer and run hardware-test. Open serial monitor and make sure autoscroll is enabled. You should see outup simillar to this:
 
+<img src="pic/pots_serial.png" width="800px"/>
+
+- Open [hardware-test.ino](hardware-test/hardware-test.ino), comment previous lines and uncomment ```#define TEST_SWITCHES```.
+- Connect Daisy to the computer and run hardware-test. Open serial monitor and make sure autoscroll is enabled. You should see outup simillar to this:
+
+<img src="pic/switches_serial.png" width="800px"/>
