@@ -103,7 +103,7 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 ### The front panel
 - Insert front panel male and female header, put front panel on top, screw nuts of the pots and align front pannel footprints with the header.
 
-<img src="pic/front_panel_headers.jpg" width="800px"/>
+<img src="pic/front_panel_header.jpg" width="800px"/>
   
 - Solder female header to the board and the outer side of the male header to the front pannel.
 - Unscrew pots nuts and carefully detach front pannel.
