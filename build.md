@@ -94,12 +94,23 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   | GND             | GND            |
 
 - Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment ```#define TEST_PADS```.
-- Connect Daisy to the computer and run hardware-test.ino. 
+- Connect Daisy to the computer and run hardware-test.ino. Touching MPR121 pins with a finger or wire you should see the output simillar to this one. Note, only pins 1-9 are used.
+
+<img src="pic/mpr121_serial.jpg" width="800px"/>
+
+- Disconnect Daisy!
 
 ### The front panel
-- Insert and solder front panel female header as shown at the photo. 
-- Insert front panel male header, put front panel on top, screw couple of nuts and align front pannel footprints with the header.
-- Solder male header to the front panel as shown in the photo. Every touch pad has a dot near it which can be used for checking soldering with multimeter.
+- Insert front panel male and female header, put front panel on top, screw nuts of the pots and align front pannel footprints with the header.
+
+<img src="pic/front_panel_headers.jpg" width="800px"/>
+  
+- Solder female header to the board and the outer side of the male header to the front pannel.
+- Unscrew pots nuts and carefully detach front pannel.
+- Solder inner side of the header.
+- Check soldering with the multimeter. Every touch pad has a dot near it which can be used for checking.
+
+  <img src="pic/front_panel_check.jpg" width="800px"/>
 
 ### Pots, Switches and Sockets
 - Place pots, switches and sockets on the board as shown on the photo. Don't solder yet.
