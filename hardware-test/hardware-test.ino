@@ -2,15 +2,29 @@
 #include "Adafruit_MPR121.h"
 #include <Wire.h>
 
-// #define TEST_KNOBS_A
-// #define TEST_KNOBS_B
-// #define TEST_KNOBS_G
-// #define TEST_SWITCHES
+// #define TEST_LEDS
+// #define TEST_FADER
 // #define TEST_PADS
 // #define TEST_TRIGGER
-// #define TEST_LEDS
+// #define TEST_KNOBS_A
+// #define TEST_KNOBS_B
+// #define TEST_KNOBS_C
+// #define TEST_SWITCHES
+
+
+
+
+
+
+
+
+
+
+
 
 void setup() {
+  Serial.begin(9600);
+  
   #ifdef TEST_SWITCHES
   setupSwitches();
   #endif
@@ -43,8 +57,8 @@ void loop() {
   testKonbsB();
   #endif
 
-  #ifdef TEST_KNOBS_G
-  testGlobalKnobs();
+  #ifdef TEST_KNOBS_C
+  testCommonKnobs();
   #endif
 
   #ifdef TEST_FADER
@@ -106,7 +120,7 @@ void testKonbsB() {
   Serial.println(KR(JitterAmountB));
 }
 
-void testGlobalKnobs() {
+void testCommonKnobs() {
   Serial.print("Tempo ");
   Serial.println(KR(Tempo));
   Serial.print("Pattern Crossfade ");
