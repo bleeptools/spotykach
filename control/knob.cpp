@@ -9,7 +9,7 @@ void Knob::initialize(AdcChannelConfig& conf, int channel) {
 }
 
 void Knob::configure(DaisySeed& hw) {
-    _ctrl.Init(hw.adc.GetPtr(_channel), hw.AudioCallbackRate(), flip());
+    _ctrl.Init(hw.adc.GetPtr(_channel), hw.AudioCallbackRate(), true);
 }
 
 float Knob::value() { 

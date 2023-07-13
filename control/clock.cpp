@@ -1,5 +1,4 @@
 #include "clock.h"
-#include "layout.h"
 #include "../common/fcomp.h"
 #include "../core/globals.h"
 
@@ -9,11 +8,7 @@ using namespace spotykach;
 void Clock::run(Clockable& clockable) {
     _clockable = &clockable;
     daisy::GPIO::Config cfg;
-#ifdef ROEY_LAYOUT
-	cfg.pin = daisy::seed::D0;
-#else
-    cfg.pin = daisy::seed::D2;
-#endif
+    cfg.pin = daisy::seed::D10;
 	g.Init(cfg);
 }
 

@@ -3,7 +3,6 @@
 #include <algorithm>
 #include "hid/led.h"
 #include "../core/globals.h"
-#include "layout.h"
 
 namespace blptls {
 namespace spotykach {
@@ -14,15 +13,9 @@ public:
     ~Leds() = default;
 
     void initialize() {
-    #ifdef ROEY_LAYOUT
-        _led_a.Init(daisy::seed::D29, false, 31250);
-        _led_b.Init(daisy::seed::D26, false, 31250);
-        _led_r.Init(daisy::seed::D27, false);
-    #else
-        _led_a.Init(daisy::seed::D4, false, 31250);
-        _led_b.Init(daisy::seed::D6, false, 31250);
-        _led_r.Init(daisy::seed::D5, false);
-    #endif
+    _led_a.Init(daisy::seed::D29, false, 31250);
+    _led_b.Init(daisy::seed::D27, false, 31250);
+    _led_r.Init(daisy::seed::D5, false);
     }
 
     void blink_a(uint32_t duration, bool reverse) {

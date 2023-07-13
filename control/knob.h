@@ -2,7 +2,6 @@
 
 #include "daisy_seed.h"
 #include "smoother.h"
-#include "layout.h"
 
 class Knob {
 public:
@@ -53,42 +52,19 @@ private:
         using namespace seed;
         using KT = Knob::Target;
         switch (usage) {
-        #ifdef ROEY_LAYOUT
-            case KT::SlicePositionA:    return A8;
-            case KT::SliceLengthA:      return A7;
-            case KT::RetriggerA:        return A6;
-            case KT::JitterAmountA:     return A9;
-            case KT::Tempo:             return A5;
+            case KT::JitterAmountA:     return A10;
+            case KT::SlicePositionA:    return A9;
+            case KT::SliceLengthA:      return A8;
+            case KT::RetriggerA:        return A7;
+            case KT::Tempo:             return A6;
             case KT::VolumeCrossfade:   return A11;
-            case KT::PatternCrossfade:  return A4;
-            case KT::Pitch:             return A10;
-            case KT::SlicePositionB:    return A1;
-            case KT::SliceLengthB:      return A0;
+            case KT::PatternCrossfade:  return A5;
+            case KT::Pitch:             return A4;
             case KT::RetriggerB:        return A3;
             case KT::JitterAmountB:     return A2;
+            case KT::SlicePositionB:    return A1;
+            case KT::SliceLengthB:      return A0;
             default: return {};
-        #else
-            case KT::SlicePositionA:    return A10;
-            case KT::SliceLengthA:      return A9;
-            case KT::RetriggerA:        return A8;
-            case KT::JitterAmountA:     return A11;
-            case KT::Tempo:             return A7;
-            case KT::VolumeCrossfade:   return A5;
-            case KT::PatternCrossfade:  return A6;
-            case KT::Pitch:             return A4;
-            case KT::SlicePositionB:    return A2;
-            case KT::SliceLengthB:      return A1;
-            case KT::RetriggerB:        return A3;
-            case KT::JitterAmountB:     return A0;
-            default: return {};
-        #endif
         }
     };
-
-    bool flip() {
-        switch (_targets[_channel]) {
-            case Knob::Target::VolumeCrossfade: return false;
-            default: return true;
-        }
-    }
 };

@@ -28,8 +28,6 @@ $ make
 $ cd ../.. 
 $ make clean; make
 ```
-### Layout
-See [control/layout.h](https://github.com/vlad-litvinenko/that-simple/blob/main/control/layout.h)
 
 ### Upload
 ```shell
