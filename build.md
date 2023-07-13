@@ -84,6 +84,9 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
 <img src="pic/mpr121_headers.jpg" width="800px"/>
   
 - Insert MPR121 male headers, put MPR121 board on top and solder.
+
+<img src="pic/mpr121_attached.jpg" width="800px"/>
+  
 - Wire MPR121 as following:
   
   | MPR121          | Daisy          |
@@ -158,6 +161,8 @@ Tip: toggle <img src="pic/serial_autoscroll.jpg" width="24px"/> to see live upda
   | Cascade           | 47          | 41              |
   | Reverse B         | 59          | 09              |
   | Pattern Mode B    | 78          | 10              |
+
+<img src="pic/full_assembly.jpg" width="800px"/>
 
 - Check the wiring with potentiometer.
 - Open [hardware-test.ino](hardware-test/hardware-test.ino) and uncomment one by one the following lines:
