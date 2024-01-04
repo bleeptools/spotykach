@@ -13,9 +13,8 @@ are [here](build.md)
 
 ### Setup
 ```shell
-$ git clone git@github.com:vlad-litvinenko/that-simple.git
-$ git submodule update --init
-$ cd lib/libdaisy
+$ git clone --recurse-submodules https://github.com/bleeptools/spotykach.git
+$ cd spotykach/lib/libDaisy
 $ make
 $ cd ../.. 
 $ make clean; make
